@@ -37,7 +37,7 @@ I made a web page that allows you to play hit the `mole` but in this case it is 
 
 ## Portfolio Link
 
-`https://diegolibonati.github.io/DiegoLibonatiWeb/#/projects?q=Whac-a-mole%20page`
+`https://diegolibonati.github.io/DiegoLibonatiWeb/#/projects?q=Whac-a-mole%20Page`
 
 ## Video
 
