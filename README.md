@@ -23,21 +23,9 @@ I made a web page that allows you to play hit the `mole` but in this case it is 
 2. Javascript
 3. HTML5
 
-## Galery
-
-![Whac-a-mole-Car](https://raw.githubusercontent.com/DiegoLibonati/DiegoLibonatiWeb/main/data/projects/Javascript/Imagenes/whac-0.jpg)
-
-![Whac-a-mole-Car](https://raw.githubusercontent.com/DiegoLibonati/DiegoLibonatiWeb/main/data/projects/Javascript/Imagenes/whac-1.jpg)
-
-![Whac-a-mole-Car](https://raw.githubusercontent.com/DiegoLibonati/DiegoLibonatiWeb/main/data/projects/Javascript/Imagenes/whac-2.jpg)
-
-![Whac-a-mole-Car](https://raw.githubusercontent.com/DiegoLibonati/DiegoLibonatiWeb/main/data/projects/Javascript/Imagenes/whac-3.jpg)
-
-![Whac-a-mole-Car](https://raw.githubusercontent.com/DiegoLibonati/DiegoLibonatiWeb/main/data/projects/Javascript/Imagenes/whac-4.jpg)
-
 ## Portfolio Link
 
-`https://diegolibonati.github.io/DiegoLibonatiWeb/#/projects?q=Whac-a-mole%20Page`
+[`https://www.diegolibonati.com.ar/#/project/36`](https://www.diegolibonati.com.ar/#/project/36)
 
 ## Video
 
