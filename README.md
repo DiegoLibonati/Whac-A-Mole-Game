@@ -13,6 +13,14 @@
 2. Join to the correct path of the clone
 3. Open index.html in your favorite navigator
 
+---
+
+1. Clone the repository
+2. Join to the correct path of the clone
+3. Execute: `yarn install`
+4. Execute: `yarn dev`
+
+
 ## Description
 
 I made a web page that allows you to play hit the `mole` but in this case it is a `rat`. Basically the user will have 60 seconds to hit the mouse as many times as possible, the mouse will be generated in a random space in the grid. If it is hit by left clicking with the mouse, you will score points.
@@ -20,7 +28,7 @@ I made a web page that allows you to play hit the `mole` but in this case it is 
 ## Technologies used
 
 1. CSS3
-2. Javascript
+2. Typescript
 3. HTML5
 
 ## Portfolio Link
@@ -33,103 +41,99 @@ https://user-images.githubusercontent.com/99032604/199616929-5f4a5738-43aa-4872-
 
 ## Documentation
 
-The `gridCreate()` function is in charge of creating the game board:
+The `createGrid()` function is in charge of creating the game board:
 
 ```
-function gridCreate(gridValue){
-    for (i = 0; i < 25; i++){
-        const grid = document.createElement("div");
-        grid.setAttribute("id", i);
-        gridValue.append(grid);
-        gridArray.push(i);
-    }
-}
+import { gridDisplay } from "../constants/elements";
+
+export const createGrid = (): void => {
+  for (let i = 0; i < 25; i++) {
+    const grid = document.createElement("div");
+    grid.setAttribute("id", String(i));
+    gridDisplay.append(grid);
+  }
+};
+
 ```
 
 The `spawnRandom()` function is in charge of generating a spawnRandom of the rat in any cube of the board:
 
 ```
-function spawnRandom(){
-    random = Math.floor(Math.random() * gridArray.length);
-    return random
-}
+import { gridDisplay } from "../constants/elements";
+
+export const spawnRandom = (): number => {
+  const random = Math.floor(Math.random() * gridDisplay.children.length);
+  return random;
+};
 ```
 
 The `spawnEnemy()` function is in charge of generating the appearance of the rat on the Board:
 
 ```
-function spawnEnemy(){
+const spawnEnemy = (): void => {
+  const spawn = spawnRandom();
 
-    let numberRandom = spawnRandom();
+  const spawnElement = document.getElementById(`${spawn}`) as HTMLDivElement;
 
-    const spawnRat = document.getElementById(`${numberRandom}`);
+  const rat = document.createElement("img");
 
-    const rat = document.createElement("img");
+  rat.setAttribute("src", "./src/assets/rata.png");
+  rat.setAttribute("class", "rat");
 
-    ratArray.push(rat);
+  spawnElement.append(rat);
 
-    rat.setAttribute("src", "rata.png");
-    rat.setAttribute("class", "rat");
+  rat.addEventListener("click", () => {
+    removeRat(rat);
+    moleState.counter++;
+    scoreUpdate();
+  });
 
-    spawnRat.append(rat);
-
-    rat.addEventListener("click", (e)=>{
-        ratArray = [];
-        removeRat();
-        contador++
-        scoreUpdate();
-    });
-
-    if (ratArray.length >= 1){
-            ratArray = [];
-            setTimeout(removeRat, 2000);
-        } else {
-            console.log("Error.");
-        }
-
-}
+  setTimeout(() => removeRat(rat), 2000);
+};
 ```
 
 The `removeRat()` function is in charge of removing the rat from the game board:
 
 ```
-function removeRat(){
-    const getRat = document.querySelector(".rat");
-
-    try{
-        getRat.remove();
-    }catch(e){
-        console.log("Nada que remover")
-    }
-
-}
+const removeRat = (elementRat: HTMLImageElement): void => {
+  try {
+    elementRat.remove();
+  } catch (e) {
+    console.log("Nothing to remove");
+  }
+};
 ```
 
 The `scoreUpdate()` function is in charge of updating the score each time we click on the rat:
 
 ```
-function scoreUpdate(){
-    document.getElementById("score").innerHTML = contador;
-}
+import { score } from "../constants/elements";
+import { moleState } from "../state";
+
+export const scoreUpdate = (): void => {
+  score.textContent = String(moleState.counter);
+};
 ```
 
-The `timeConfig()` function is in charge of subtracting time from the counter, the player will have one minute to make the most clicks on the rat:
+The `handleTimer()` function is in charge of subtracting time from the counter, the player will have one minute to make the most clicks on the rat:
 
 ```
-function timeConfig(gridValue){
+const handleTimer = (): void => {
+  if (moleState.runTime <= 0) {
+    time.textContent = "The time is over";
+    counterContainerP.textContent = `You score was ${moleState.counter}, Congrats. if you want, push in PLAY AGAIN`;
+    btnPlayAgain.style.display = "block";
+    gridDisplay.style.display = "none";
+    gridDisplay.innerHTML = "";
+    clearInterval(clearTime);
+    clearInterval(clearGame);
+    return;
+  }
 
-    if(runTime <= 0){
-        clearInterval(clearTime);
-        clearInterval(clearGame);
-        document.getElementById("time").innerHTML = "The time is over";
-        document.querySelector(".contador_container p").innerHTML = `You score was ${contador}, Congrats. if you want, push in PLAY AGAIN`
-        gridValue.remove();
+  moleState.runTime--;
+  time.textContent = String(moleState.runTime);
+};
 
-    } else {
-        runTime--
-        document.getElementById("time").innerHTML = runTime;
-    }
-}
 ```
 
 This gives the user the possibility once the time is up to play again without restarting the page, by clicking on `btnPlayAgain`:
@@ -138,29 +142,17 @@ This gives the user the possibility once the time is up to play again without re
 btnPlayAgain.addEventListener("click", (e) => {
   e.preventDefault();
 
-  gridArray = [];
-  ratArray = [];
-  contador = 0;
-  runTime = 60;
+  moleState.counter = 0;
+  moleState.runTime = 60;
+  
+  counterContainerP.innerHTML = `Score: <span id="score">0</span>`;
 
-  const newGridDiv = document.createElement("div");
-  newGridDiv.setAttribute("class", "grid");
+  btnPlayAgain.style.display = "none";
+  gridDisplay.style.display = "flex";
 
-  const parentDiv = document.querySelector(".section_container");
-
-  const beforeThis = document.querySelector(".btns_container");
-
-  parentDiv.insertBefore(newGridDiv, beforeThis);
-
-  gridCreate(newGridDiv);
-
-  document.querySelector(
-    ".contador_container p"
-  ).innerHTML = `Score: <span id="score">0</span>`;
+  createGrid();
 
   clearGame = setInterval(spawnEnemy, 3000);
-  clearTime = setInterval(function () {
-    timeConfig(newGridDiv);
-  }, 1000);
+  clearTime = setInterval(handleTimer, 1000);
 });
 ```
