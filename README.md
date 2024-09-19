@@ -1,4 +1,4 @@
-# Whac-A-Mole-Game-Page
+# Whac A Mole Game
 
 ## Getting Started
 
@@ -33,7 +33,7 @@ I made a web page that allows you to play hit the `mole` but in this case it is 
 
 ## Portfolio Link
 
-[`https://www.diegolibonati.com.ar/#/project/36`](https://www.diegolibonati.com.ar/#/project/36)
+[`https://www.diegolibonati.com.ar/#/project/Whac-A-Mole-Game`](https://www.diegolibonati.com.ar/#/project/Whac-A-Mole-Game)
 
 ## Video
 
