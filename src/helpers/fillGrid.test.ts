@@ -1,15 +1,9 @@
 import { fillGrid } from "./fillGrid";
 
-const INITIAL_HTML: string = `
-    <main>
-        <div class="grid"></div>
-    </main>
-`;
+import { OFFICIAL_BODY } from "../tests/jest.setup";
 
 beforeEach(() => {
-  const body = INITIAL_HTML;
-
-  document.body.innerHTML = body;
+  document.body.innerHTML = OFFICIAL_BODY;
 });
 
 afterEach(() => {

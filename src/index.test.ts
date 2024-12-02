@@ -1,22 +1,16 @@
 import { screen } from "@testing-library/dom";
 import user from "@testing-library/user-event";
 
-import fs from "fs";
-import path from "path";
-
-import { IMAGE_MOLE_ALT, IMAGE_MOLE_SRC } from "./tests/jest.setup";
-
-const INITIAL_HTML: string = fs.readFileSync(
-  path.resolve(__dirname, "../index.html"),
-  "utf8"
-);
+import {
+  IMAGE_MOLE_ALT,
+  IMAGE_MOLE_SRC,
+  OFFICIAL_BODY,
+} from "./tests/jest.setup";
 
 beforeEach(() => {
   jest.useFakeTimers();
-  jest.resetModules();
 
-  const body = INITIAL_HTML.match(/<body[^>]*>([\s\S]*?)<\/body>/i)![1];
-  document.body.innerHTML = body;
+  document.body.innerHTML = OFFICIAL_BODY;
 
   require("./index.ts");
   document.dispatchEvent(new Event("DOMContentLoaded"));

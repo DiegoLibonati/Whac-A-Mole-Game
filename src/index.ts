@@ -31,11 +31,13 @@ const handleClickRat = () => {
   score.textContent = String(moleState.counter);
 };
 
-const handleResetTimers = (): void => {
+const handleInitialState = (): void => {
   if (window.intervalGame) clearInterval(window.intervalGame!);
   if (window.intervalTime) clearInterval(window.intervalTime!);
   if (window.timeoutSpawn) clearTimeout(window.timeoutSpawn!);
 
+  moleState.counter = 0;
+  moleState.runTime = 60;
   window.intervalGame = null;
   window.intervalTime = null;
   window.timeoutSpawn = null;
@@ -89,7 +91,7 @@ function handleTimer(): void {
 }
 
 const onInit = () => {
-  handleResetTimers();
+  handleInitialState();
 
   const { btnPlayAgain, grid } = getElements();
 
