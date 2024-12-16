@@ -34,7 +34,6 @@ I made a web page that allows you to play hit the `mole` but in this case it is 
 "jest": "^29.7.0"
 "jest-environment-jsdom": "^29.7.0"
 "ts-jest": "^29.2.5"
-"jest-fixed-jsdom": "^0.0.9"
 "typescript": "^5.2.2"
 "vite": "^5.1.0"
 ```
