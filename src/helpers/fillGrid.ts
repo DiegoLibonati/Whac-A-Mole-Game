@@ -4,6 +4,7 @@ export const fillGrid = (grid: HTMLDivElement, quantity: number): void => {
   for (let i = 0; i < quantity; i++) {
     const gridItem = document.createElement("div");
     gridItem.setAttribute("id", String(i));
+    gridItem.setAttribute("class", "game__grid-ceil");
     grid.append(gridItem);
   }
 };

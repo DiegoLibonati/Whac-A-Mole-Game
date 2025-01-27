@@ -38,7 +38,7 @@ describe("index.ts", () => {
     });
 
     test("The game board, the score, the timer must be rendered and the play again button must not be present.", () => {
-      const grid = document.querySelector(".grid") as HTMLDivElement;
+      const grid = document.querySelector(".game__grid") as HTMLDivElement;
       const score = screen.getByText("Score:");
       const timer = screen.getByText("Time:");
       const btnPlayAgain = screen.getByRole("button", { name: /play again/i });
@@ -53,7 +53,7 @@ describe("index.ts", () => {
     test("It should render everything needed when the game ends.", () => {
       jest.advanceTimersByTime(61000);
 
-      const grid = document.querySelector(".grid") as HTMLDivElement;
+      const grid = document.querySelector(".game__grid") as HTMLDivElement;
       const time = screen.getByText("The time is over");
       const counter = screen.getByText(
         `You score was 0, Congrats. if you want, push in PLAY AGAIN`
@@ -83,7 +83,7 @@ describe("index.ts", () => {
 
       await userEvent.click(btnPlayAgain);
 
-      const grid = document.querySelector(".grid") as HTMLDivElement;
+      const grid = document.querySelector(".game__grid") as HTMLDivElement;
       const score = screen.getByText("Score:");
       const timer = screen.getByText("Time:");
 

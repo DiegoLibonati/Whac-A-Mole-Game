@@ -17,34 +17,48 @@
     />
   </head>
   <body>
-    <header class="header">
-      <div class="header__logo">
-        <img src="./src/assets/DL.png" alt="diego libonati" />
+    <header class="header-wrapper">
+      <div class="header-wrapper__logo">
+        <img
+          src="./src/assets/DL.png"
+          alt="diego libonati"
+          class="header-wrapper__logo-img"
+        />
       </div>
 
-      <div class="header__title">
-        <h2>Whac-a-mole</h2>
+      <div class="header-wrapper__title">
+        <h2 class="header-wrapper__title-text">Whac-a-mole</h2>
       </div>
     </header>
 
     <section class="game">
-      <div class="game__description">
-        <h1>Welcome to Whac-a-mole GAME!</h1>
-        <p>
+      <div class="game__information">
+        <h1 class="game__information-title">Welcome to Whac-a-mole GAME!</h1>
+        <p class="game__information-description">
           You need to hit the RAT when he display in your window. If you hit,
           you will earn points.
         </p>
       </div>
 
-      <div class="game__counter">
-        <p>Score: <span id="score">-</span></p>
-        <p>Time: <span id="time">-</span></p>
+      <div class="game__stats">
+        <p class="game__stats-score">
+          Score: <span id="score" class="game__stats-score-number">-</span>
+        </p>
+        <p class="game__stats-time">
+          Time: <span id="time" class="game__stats-time-number">-</span>
+        </p>
       </div>
 
-      <div class="grid"></div>
+      <div class="game__grid"></div>
 
-      <div class="game__btns">
-        <button id="playAgain" aria-label="play again">PLAY AGAIN</button>
+      <div class="game__actions">
+        <button
+          id="playAgain"
+          aria-label="play again"
+          class="game__actions-play-again"
+        >
+          PLAY AGAIN
+        </button>
       </div>
     </section>
 

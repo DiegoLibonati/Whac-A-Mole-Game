@@ -13,7 +13,7 @@ describe("fillGrid.ts", () => {
     });
 
     test("It must render a grid with the quantity of 25 items.", () => {
-      const grid = document.querySelector(".grid") as HTMLDivElement;
+      const grid = document.querySelector(".game__grid") as HTMLDivElement;
 
       fillGrid(grid, 25);
 

@@ -1,4 +1,4 @@
-.header {
+.header-wrapper {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -8,21 +8,21 @@
   background: var(--secondary-color);
 }
 
-.header__logo,
-.header__title {
+.header-wrapper__logo,
+.header-wrapper__title {
   margin: 1rem;
 }
 
-.header__title h2 {
-  font-size: 3rem;
-  letter-spacing: 0.2rem;
-  color: var(--white-color);
-}
-
-.header__logo img {
+.header-wrapper__logo-img {
   height: 10rem;
   width: 10rem;
   object-fit: cover;
+}
+
+.header-wrapper__title-text {
+  font-size: 3rem;
+  letter-spacing: 0.2rem;
+  color: var(--white-color);
 }
 
 .game {
@@ -33,7 +33,7 @@
   width: 100%;
 }
 
-.game__description {
+.game__information {
   display: flex;
   flex-flow: row wrap;
   align-items: center;
@@ -43,20 +43,20 @@
   padding: 1rem;
 }
 
-.game__description h1 {
+.game__information-title {
   font-size: 4rem;
   text-align: center;
   color: var(--white-color);
 }
 
-.game__description p {
+.game__information-description {
   font-size: 2rem;
   margin-top: 1rem;
   text-align: justify;
   color: var(--white-color);
 }
 
-.game__counter {
+.game__stats {
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -66,41 +66,20 @@
   padding: 1rem;
 }
 
-.game__counter p {
+.game__stats-score,
+.game__stats-time {
   font-size: 3rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   color: var(--white-color);
 }
 
-#score {
+.game__stats-score-number,
+.game__stats-time-number {
   font-size: 3rem;
 }
 
-#time {
-  font-size: 3rem;
-}
-
-.game__btns {
-  width: 80%;
-  margin: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#playAgain {
-  display: none;
-  font-size: 1.5rem;
-  padding: 1rem;
-  border-radius: 1rem;
-  background-color: rgba(var(--black-int-color), 0.3);
-  color: var(--white-color);
-  border: 0.1rem solid var(--white-color);
-  cursor: pointer;
-}
-
-.grid {
+.game__grid {
   display: flex;
   flex-flow: row wrap;
   width: 80%;
@@ -112,30 +91,46 @@
   margin: 1rem;
 }
 
-.grid div {
+.game__grid-ceil {
   width: 20%;
   height: 20%;
   max-height: auto;
   border: 0.1rem solid var(--white-color);
 }
 
-.grid div img {
+.game__actions {
+  width: 80%;
+  margin: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game__actions-play-again {
+  display: none;
+  font-size: 1.5rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: rgba(var(--black-int-color), 0.3);
+  color: var(--white-color);
+  border: 0.1rem solid var(--white-color);
+  cursor: pointer;
+}
+
+.rat {
+  overflow-y: hidden;
   position: relative;
   z-index: 1;
   width: 100%;
   height: 100%;
 }
 
-.rat {
-  overflow-y: hidden;
-}
-
 @media screen and (min-width: 768px) {
-  .game__description {
+  .game__information {
     flex-flow: column wrap;
   }
 
-  .grid {
+  .game__grid {
     width: 60%;
   }
 }
