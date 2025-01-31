@@ -8,20 +8,21 @@
   background: var(--secondary-color);
 }
 
-.header-wrapper__logo,
-.header-wrapper__title {
+.header-wrapper__picture,
+.header-wrapper__content {
   margin: 1rem;
 }
 
-.header-wrapper__logo-img {
+.header-wrapper__logo {
   height: 10rem;
   width: 10rem;
   object-fit: cover;
 }
 
-.header-wrapper__title-text {
+.header-wrapper__title {
   font-size: 3rem;
   letter-spacing: 0.2rem;
+  text-align: center;
   color: var(--white-color);
 }
 
@@ -33,7 +34,7 @@
   width: 100%;
 }
 
-.game__information {
+.game__explication {
   display: flex;
   flex-flow: row wrap;
   align-items: center;
@@ -43,13 +44,13 @@
   padding: 1rem;
 }
 
-.game__information-title {
+.game__explication-title {
   font-size: 4rem;
   text-align: center;
   color: var(--white-color);
 }
 
-.game__information-description {
+.game__description {
   font-size: 2rem;
   margin-top: 1rem;
   text-align: justify;
@@ -66,16 +67,16 @@
   padding: 1rem;
 }
 
-.game__stats-score,
-.game__stats-time {
+.game__score,
+.game__time {
   font-size: 3rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   color: var(--white-color);
 }
 
-.game__stats-score-number,
-.game__stats-time-number {
+.game__score-number,
+.game__time-number {
   font-size: 3rem;
 }
 
@@ -106,7 +107,7 @@
   justify-content: center;
 }
 
-.game__actions-play-again {
+.game__btn-play-again {
   display: none;
   font-size: 1.5rem;
   padding: 1rem;
@@ -126,7 +127,7 @@
 }
 
 @media screen and (min-width: 768px) {
-  .game__information {
+  .game__explication {
     flex-flow: column wrap;
   }
 

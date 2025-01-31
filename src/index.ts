@@ -11,7 +11,7 @@ const handlePlayAgain = (e: MouseEvent): void => {
   moleState.counter = 0;
   moleState.runTime = 60;
 
-  counterContainerP.innerHTML = `Score: <span id="score" class="game__stats-score-number">-</span>`;
+  counterContainerP.innerHTML = `Score: <span id="score" class="game__score-number">-</span>`;
   time.textContent = "-";
 
   btnPlayAgain.style.display = "none";
