@@ -1,6 +1,6 @@
 import { fillGrid } from "./fillGrid";
 
-import { OFFICIAL_BODY } from "../tests/jest.constants";
+import { OFFICIAL_BODY } from "../../tests/jest.constants";
 
 describe("fillGrid.ts", () => {
   describe("General Tests.", () => {
