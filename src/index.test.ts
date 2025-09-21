@@ -5,7 +5,7 @@ import {
   IMAGE_MOLE_ALT,
   IMAGE_MOLE_SRC,
   OFFICIAL_BODY,
-} from "../tests/jest.constants";
+} from "@tests/jest.constants";
 
 describe("index.ts", () => {
   describe("General Tests.", () => {

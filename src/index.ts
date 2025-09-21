@@ -1,7 +1,7 @@
-import { moleState } from "./state";
+import { moleState } from "@src/state";
 
-import { fillGrid } from "./helpers/fillGrid";
-import { getElements } from "./helpers/getElements";
+import { fillGrid } from "@src/helpers/fillGrid";
+import { getElements } from "@src/helpers/getElements";
 
 const handlePlayAgain = (e: MouseEvent): void => {
   const { counterContainerP, time, btnPlayAgain, grid } = getElements();
