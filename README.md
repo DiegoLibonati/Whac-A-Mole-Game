@@ -22,6 +22,7 @@ I made a web page that allows you to play hit the `mole` but in this case it is 
 1. CSS3
 2. Typescript
 3. HTML5
+4. Vite
 
 ## Libraries used
 
