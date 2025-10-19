@@ -1,10 +1,10 @@
+import { GridItem } from "@src/components/GridItem/GridItem";
+
 export const fillGrid = (grid: HTMLDivElement, quantity: number): void => {
-  if (grid.children.length > 0) grid.innerHTML = "";
+  if (grid.children.length > 0) grid.replaceChildren();
 
   for (let i = 0; i < quantity; i++) {
-    const gridItem = document.createElement("div");
-    gridItem.setAttribute("id", String(i));
-    gridItem.setAttribute("class", "game__grid-ceil");
+    const gridItem = GridItem({ id: `gi-${i}` });
     grid.append(gridItem);
   }
 };

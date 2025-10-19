@@ -11,7 +11,10 @@
       name="description"
       content="Play Whac-A-Mole, find the mouse, and click on it."
     />
-    <meta name="keywords" content="Whac-A-Mole Game, Whac-a-mole game, Whac-A-Mole, Whac-a-mole" />
+    <meta
+      name="keywords"
+      content="Whac-A-Mole Game, Whac-a-mole game, Whac-A-Mole, Whac-a-mole"
+    />
     <meta name="author" content="Diego Libonati" />
 
     <meta property="og:title" content="Whac-A-Mole Game" />
@@ -36,7 +39,7 @@
     <!-- <link rel="manifest" href="/manifest.json" /> -->
 
     <link rel="stylesheet" type="text/css" href="./src/index.css" />
-    <link rel="stylesheet" type="text/css" href="./src/styles.css" />
+    <link rel="stylesheet" type="text/css" href="./src/styles/css/header.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -45,50 +48,21 @@
     />
   </head>
   <body>
-    <header class="header-wrapper">
-      <div class="header-wrapper__picture">
+    <header class="header">
+      <div class="header__picture">
         <img
-          src="./src/assets/DL.png"
+          src="./src/assets/pngs/DL.png"
           alt="diego libonati"
-          class="header-wrapper__logo"
+          class="header__logo"
         />
       </div>
 
-      <div class="header-wrapper__content">
-        <h2 class="header-wrapper__title">Whac-a-mole</h2>
+      <div class="header__content">
+        <h2 class="header__title">Whac-a-mole</h2>
       </div>
     </header>
 
-    <section class="game">
-      <div class="game__explication">
-        <h1 class="game__explication-title">Welcome to Whac-a-mole GAME!</h1>
-        <p class="game__description">
-          You need to hit the RAT when he display in your window. If you hit,
-          you will earn points.
-        </p>
-      </div>
-
-      <div class="game__stats">
-        <p class="game__score">
-          Score: <span id="score" class="game__score-number">-</span>
-        </p>
-        <p class="game__time">
-          Time: <span id="time" class="game__time-number">-</span>
-        </p>
-      </div>
-
-      <div class="game__grid"></div>
-
-      <div class="game__actions">
-        <button
-          id="playAgain"
-          aria-label="play again"
-          class="game__btn-play-again"
-        >
-          PLAY AGAIN
-        </button>
-      </div>
-    </section>
+    <div id="app"></div>
 
     <script type="module" src="./src/index.ts"></script>
   </body>

@@ -1,11 +1,9 @@
 import { fillGrid } from "@src/helpers/fillGrid";
 
-import { OFFICIAL_BODY } from "@tests/jest.constants";
-
 describe("fillGrid.ts", () => {
   describe("General Tests.", () => {
     beforeEach(() => {
-      document.body.innerHTML = OFFICIAL_BODY;
+      document.body.innerHTML = "<div class='game__grid'></div>";
     });
 
     afterEach(() => {

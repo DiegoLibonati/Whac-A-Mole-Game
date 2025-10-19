@@ -61,3 +61,5 @@ https://user-images.githubusercontent.com/99032604/199616929-5f4a5738-43aa-4872-
 2. Execute: `yarn test` or `npm test`
 
 ## Known Issues
+
+1. `rata.png` is not being included in the final build.

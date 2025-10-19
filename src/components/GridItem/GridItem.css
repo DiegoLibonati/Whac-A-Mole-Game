@@ -1,0 +1,6 @@
+.grid-item {
+  width: 20%;
+  height: 20%;
+  max-height: auto;
+  border: 0.1rem solid var(--white-color);
+}
