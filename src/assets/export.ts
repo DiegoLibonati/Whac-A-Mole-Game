@@ -1,9 +1,7 @@
-import DlPng from "@src/assets/pngs/DL.png";
-import RatPng from "@src/assets/pngs/rata.png";
+import RatPng from "@src/assets/images/rata.png";
 
 const assets = {
-  pngs: {
-    DlPng: DlPng,
+  images: {
     RatPng: RatPng,
   },
 };

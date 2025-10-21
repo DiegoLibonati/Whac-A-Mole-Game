@@ -17,7 +17,7 @@ const renderComponent = (): RenderComponent => {
 jest.mock("@src/assets/export", () => ({
   __esModule: true,
   default: {
-    pngs: {
+    images: {
       RatPng: "mocked-rat.png",
     },
   },
@@ -56,7 +56,7 @@ describe("Mole.ts", () => {
     test("It should have correct src attribute from assets", () => {
       const { container } = renderComponent();
 
-      expect(container.getAttribute("src")).toBe(assets.pngs.RatPng);
+      expect(container.getAttribute("src")).toBe(assets.images.RatPng);
     });
 
     test("It should have correct alt attribute", () => {
@@ -86,7 +86,7 @@ describe("Mole.ts", () => {
 
       const img = screen.getByAltText("mole");
       expect(img).toBeInTheDocument();
-      expect(img).toHaveAttribute("src", assets.pngs.RatPng);
+      expect(img).toHaveAttribute("src", assets.images.RatPng);
     });
   });
 

@@ -7,7 +7,7 @@ import "@src/components/Mole/Mole.css";
 export const Mole = ({}: MoleProps): HTMLImageElement => {
   const mole = document.createElement("img");
 
-  mole.src = assets.pngs.RatPng;
+  mole.src = assets.images.RatPng;
   mole.alt = "mole";
   mole.className = "mole";
 
