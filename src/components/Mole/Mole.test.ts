@@ -46,7 +46,7 @@ describe("Mole.ts", () => {
     test("It should append the image to the DOM", () => {
       const { container } = renderComponent();
 
-      const img = document.querySelector(".mole");
+      const img = document.querySelector<HTMLImageElement>(".mole");
       expect(img).toBeInTheDocument();
       expect(img).toBe(container);
     });
@@ -104,7 +104,9 @@ describe("Mole.ts", () => {
       const second = renderComponent().container;
 
       expect(first).not.toBe(second);
-      expect(document.querySelectorAll(".mole").length).toBe(2);
+      expect(document.querySelectorAll<HTMLImageElement>(".mole").length).toBe(
+        2
+      );
     });
   });
 });

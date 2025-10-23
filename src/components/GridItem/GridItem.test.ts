@@ -45,7 +45,7 @@ describe("GridItem.ts", () => {
       const props: GridItemProps = { id: "grid-1" };
 
       const { container } = renderComponent(props);
-      const element = document.getElementById("grid-1");
+      const element = document.querySelector<HTMLDivElement>("#grid-1");
 
       expect(element).toBeInTheDocument();
       expect(element).toBe(container);
@@ -75,8 +75,8 @@ describe("GridItem.ts", () => {
       const { container: second } = renderComponent({ id: "grid-b" });
 
       expect(first.id).not.toBe(second.id);
-      expect(document.getElementById("grid-a")).toBe(first);
-      expect(document.getElementById("grid-b")).toBe(second);
+      expect(document.querySelector<HTMLDivElement>("#grid-a")).toBe(first);
+      expect(document.querySelector<HTMLDivElement>("#grid-b")).toBe(second);
     });
   });
 
@@ -87,7 +87,7 @@ describe("GridItem.ts", () => {
 
       const element =
         screen.getByRole("generic", { hidden: true }) ??
-        document.getElementById("grid-access");
+        document.querySelector<HTMLDivElement>("#grid-access");
       expect(element).toBeInTheDocument();
     });
 

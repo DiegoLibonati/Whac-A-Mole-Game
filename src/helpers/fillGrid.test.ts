@@ -11,12 +11,12 @@ describe("fillGrid.ts", () => {
     });
 
     test("It must render a grid with the quantity of 25 items.", () => {
-      const grid = document.querySelector(".game__grid") as HTMLDivElement;
+      const grid = document.querySelector<HTMLDivElement>(".game__grid");
 
-      fillGrid(grid, 25);
+      fillGrid(grid!, 25);
 
       expect(grid).toBeInTheDocument();
-      expect(grid.children).toHaveLength(25);
+      expect(grid!.children).toHaveLength(25);
     });
   });
 });

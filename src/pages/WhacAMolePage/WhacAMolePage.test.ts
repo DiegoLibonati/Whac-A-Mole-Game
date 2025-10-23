@@ -85,7 +85,9 @@ describe("WhacAMolePage.ts", () => {
 
     test("It should render game grid container", () => {
       renderComponent();
-      expect(document.querySelector(".game__grid")).toBeInTheDocument();
+      expect(
+        document.querySelector<HTMLDivElement>(".game__grid")
+      ).toBeInTheDocument();
     });
   });
 
@@ -94,7 +96,7 @@ describe("WhacAMolePage.ts", () => {
       renderComponent();
 
       expect(fillGrid).toHaveBeenCalledTimes(1);
-      const gridElement = document.querySelector(".game__grid");
+      const gridElement = document.querySelector<HTMLDivElement>(".game__grid");
       expect(fillGrid).toHaveBeenCalledWith(gridElement, 25);
     });
 
@@ -111,27 +113,25 @@ describe("WhacAMolePage.ts", () => {
       renderComponent();
 
       const button = screen.getByRole("button", { name: /play again/i });
-      const grid = document.querySelector(".game__grid") as HTMLDivElement;
-      const score = document.querySelector(
-        ".game__score"
-      ) as HTMLParagraphElement;
-      const time = document.querySelector(
-        ".game__time-number"
-      ) as HTMLSpanElement;
+      const grid = document.querySelector<HTMLDivElement>(".game__grid");
+      const score =
+        document.querySelector<HTMLParagraphElement>(".game__score");
+      const time =
+        document.querySelector<HTMLSpanElement>(".game__time-number");
 
       button.style.display = "block";
-      grid.style.display = "none";
-      score.innerHTML = "Game over!";
-      time.textContent = "The time is over";
+      grid!.style.display = "none";
+      score!.innerHTML = "Game over!";
+      time!.textContent = "The time is over";
 
       await user.click(button);
 
       expect(whacAMoleStore.setResetGame).toHaveBeenCalled();
       expect(fillGrid).toHaveBeenCalledWith(grid, 25);
       expect(button.style.display).toBe("none");
-      expect(grid.style.display).toBe("flex");
-      expect(score.innerHTML).toContain("Score:");
-      expect(time.textContent).toBe("-");
+      expect(grid!.style.display).toBe("flex");
+      expect(score!.innerHTML).toContain("Score:");
+      expect(time!.textContent).toBe("-");
     });
   });
 
@@ -139,17 +139,28 @@ describe("WhacAMolePage.ts", () => {
     test("It should contain all main sections", () => {
       const { container } = renderComponent();
 
-      expect(container.querySelector(".game__explication")).toBeInTheDocument();
-      expect(container.querySelector(".game__stats")).toBeInTheDocument();
-      expect(container.querySelector(".game__grid")).toBeInTheDocument();
-      expect(container.querySelector(".game__actions")).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLDivElement>(".game__explication")
+      ).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLDivElement>(".game__stats")
+      ).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLDivElement>(".game__grid")
+      ).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLDivElement>(".game__actions")
+      ).toBeInTheDocument();
     });
 
     test("It should nest score and time correctly", () => {
       renderComponent();
 
-      const scoreSpan = document.querySelector(".game__score-number");
-      const timeSpan = document.querySelector(".game__time-number");
+      const scoreSpan = document.querySelector<HTMLSpanElement>(
+        ".game__score-number"
+      );
+      const timeSpan =
+        document.querySelector<HTMLSpanElement>(".game__time-number");
 
       expect(scoreSpan).toBeInTheDocument();
       expect(timeSpan).toBeInTheDocument();
@@ -160,19 +171,23 @@ describe("WhacAMolePage.ts", () => {
     test("It should create mole when interval spawns it", () => {
       renderComponent();
 
-      const grid = document.querySelector(".game__grid")!;
+      const grid = document.querySelector<HTMLDivElement>(".game__grid")!;
       const mole = document.createElement("img");
       mole.className = "mole";
       grid.append(mole);
 
-      expect(grid.querySelector(".mole")).toBeInTheDocument();
-      expect(grid.querySelector(".mole")?.tagName).toBe("IMG");
+      expect(grid.querySelector<HTMLImageElement>(".mole")).toBeInTheDocument();
+      expect(grid.querySelector<HTMLImageElement>(".mole")?.tagName).toBe(
+        "IMG"
+      );
     });
 
     test("It should visually update score when a mole is clicked", async () => {
       renderComponent();
 
-      const scoreSpan = document.querySelector(".game__score-number")!;
+      const scoreSpan = document.querySelector<HTMLSpanElement>(
+        ".game__score-number"
+      )!;
       scoreSpan.textContent = "0";
 
       scoreSpan.textContent = "1";
