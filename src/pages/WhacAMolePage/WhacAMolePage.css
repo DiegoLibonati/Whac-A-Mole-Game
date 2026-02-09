@@ -19,14 +19,14 @@
 .game__explication-title {
   font-size: 4rem;
   text-align: center;
-  color: var(--white-color);
+  color: var(--color-white);
 }
 
 .game__description {
   font-size: 2rem;
   margin-top: 1rem;
   text-align: justify;
-  color: var(--white-color);
+  color: var(--color-white);
 }
 
 .game__stats {
@@ -44,7 +44,7 @@
   font-size: 3rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  color: var(--white-color);
+  color: var(--color-white);
 }
 
 .game__score-number,
@@ -57,7 +57,7 @@
   flex-flow: row wrap;
   width: 80%;
   height: 50rem;
-  background-color: rgba(var(--black-int-color), 0.3);
+  background-color: rgba(var(--color-black-int), 0.3);
   align-items: center;
   justify-content: center;
   align-content: center;
@@ -77,13 +77,11 @@
   font-size: 1.5rem;
   padding: 1rem;
   border-radius: 1rem;
-  background-color: rgba(var(--black-int-color), 0.3);
-  color: var(--white-color);
-  border: 0.1rem solid var(--white-color);
+  background-color: rgba(var(--color-black-int), 0.3);
+  color: var(--color-white);
+  border: 0.1rem solid var(--color-white);
   cursor: pointer;
 }
-
-
 
 @media screen and (min-width: 768px) {
   .game__explication {

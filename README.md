@@ -9,9 +9,11 @@ The main goal is to explore and demonstrate best practices, patterns, and techno
 ## Getting Started
 
 1. Clone the repository
-2. Join to the correct path of the clone
-3. Execute: `yarn install` or `npm install`
-4. Execute: `yarn run dev` or `npm run dev`
+2. Navigate to the project folder
+3. Execute: `npm install`
+4. Execute: `npm run dev`
+
+The application will open automatically at `http://localhost:3000`
 
 ## Description
 
@@ -29,21 +31,29 @@ I made a web page that allows you to play hit the `mole` but in this case it is 
 #### Dependencies
 
 ```
-There are no dependencies.
+No production dependencies - Pure Vanilla TypeScript
 ```
 
 #### devDependencies
 
 ```
+"@eslint/js": "^9.39.2"
 "@testing-library/dom": "^10.4.0"
 "@testing-library/jest-dom": "^6.6.3"
 "@testing-library/user-event": "^14.5.2"
 "@types/jest": "^29.5.14"
+"eslint": "^9.39.2"
+"eslint-config-prettier": "^10.1.8"
+"eslint-plugin-prettier": "^5.5.5"
+"globals": "^17.3.0"
+"husky": "^9.1.7"
 "jest": "^29.7.0"
-"jest-environment-jsdom": "^29.7.0"
+"jest-environment-jsdom": "^30.2.0"
+"lint-staged": "^16.2.7"
+"prettier": "^3.8.1"
 "ts-jest": "^29.2.5"
-"ts-node": "^10.9.2"
 "typescript": "^5.2.2"
+"typescript-eslint": "^8.54.0"
 "vite": "^7.1.6"
 ```
 
@@ -55,11 +65,21 @@ There are no dependencies.
 
 https://user-images.githubusercontent.com/99032604/199616929-5f4a5738-43aa-4872-88f7-e336625e8b36.mp4
 
+## Video
+
+https://github.com/DiegoLibonati/Countdown-Page/assets/99032604/7510a3f4-0721-406e-b0a7-cff22bf9d0d5
+
 ## Testing
 
-1. Join to the correct path of the clone
-2. Execute: `yarn test` or `npm test`
+1. Navigate to the project folder
+2. Execute: `npm test`
+
+For coverage report:
+
+```bash
+npm run test:coverage
+```
 
 ## Known Issues
 
-1. `rata.png` is not being included in the final build.
+None at the moment.

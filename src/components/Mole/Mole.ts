@@ -1,10 +1,10 @@
-import { MoleProps } from "@src/entities/props";
+import type { MoleComponent } from "@/types/components";
 
-import assets from "@src/assets/export";
+import assets from "@/assets/export";
 
-import "@src/components/Mole/Mole.css";
+import "@/components/Mole/Mole.css";
 
-export const Mole = ({}: MoleProps): HTMLImageElement => {
+export const Mole = (): MoleComponent => {
   const mole = document.createElement("img");
 
   mole.src = assets.images.RatPng;

@@ -1,8 +1,9 @@
-import { GridItemProps } from "@src/entities/props";
+import type { GridItemProps } from "@/types/props";
+import type { GridItemComponent } from "@/types/components";
 
-import "@src/components/GridItem/GridItem.css";
+import "@/components/GridItem/GridItem.css";
 
-export const GridItem = ({ id }: GridItemProps) => {
+export const GridItem = ({ id }: GridItemProps): GridItemComponent => {
   const divRoot = document.createElement("div");
   divRoot.className = "grid-item";
   divRoot.id = id;

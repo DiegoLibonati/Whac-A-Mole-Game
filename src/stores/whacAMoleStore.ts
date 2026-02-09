@@ -1,28 +1,28 @@
-import { WhacAMoleState } from "@src/entities/states";
+import type { WhacAMoleState } from "@/types/states";
 
-import { Store } from "@src/core/store";
+import { Store } from "@/core/store";
 
 export class WhacAMoleStore extends Store<WhacAMoleState> {
-  constructor(initialState: WhacAMoleState) {
-    super(initialState);
-  }
+  // constructor(initialState: WhacAMoleState) {
+  //   super(initialState);
+  // }
 
-  public setCounterPlus() {
+  public setCounterPlus(): void {
     const { counter } = this.getState();
     const value = counter + 1;
     this.setState({ counter: value });
   }
 
-  public setCounterReset() {
+  public setCounterReset(): void {
     this.setState({ counter: 0 });
   }
 
-  public setRunTimeMinus() {
+  public setRunTimeMinus(): void {
     const { runTime } = this.getState();
     this.setState({ runTime: runTime - 1 });
   }
 
-  public setResetGame() {
+  public setResetGame(): void {
     const { timeoutSpawn, intervalGame, intervalTime } = this.getState();
 
     if (timeoutSpawn) clearTimeout(timeoutSpawn);
@@ -38,32 +38,44 @@ export class WhacAMoleStore extends Store<WhacAMoleState> {
     });
   }
 
-  public setTimeoutSpawn(timeout: NodeJS.Timeout) {
+  public setTimeoutSpawn(timeout: number): void {
     this.setState({
       timeoutSpawn: timeout,
     });
   }
 
-  public setIntervalGame(interval: NodeJS.Timeout) {
+  public setIntervalGame(interval: number): void {
     this.setState({
       intervalGame: interval,
     });
   }
 
-  public setIntervalTime(interval: NodeJS.Timeout) {
+  public setIntervalTime(interval: number): void {
     this.setState({
       intervalTime: interval,
     });
   }
 
-  public clearTimeoutSpawn() {
+  public clearTimeoutSpawn(): void {
     const { timeoutSpawn } = this.getState();
 
-    clearTimeout(timeoutSpawn!);
+    if (!timeoutSpawn) return;
+
+    clearTimeout(timeoutSpawn);
 
     this.setState({
       timeoutSpawn: null,
     });
+  }
+
+  public cleanup(): void {
+    const { intervalGame, intervalTime, timeoutSpawn } = this.getState();
+
+    if (intervalGame) clearInterval(intervalGame);
+    if (intervalTime) clearInterval(intervalTime);
+    if (timeoutSpawn) clearTimeout(timeoutSpawn);
+
+    this.setResetGame();
   }
 }
 

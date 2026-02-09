@@ -1,103 +1,15 @@
-import { Mole } from "@src/components/Mole/Mole";
+import type { Page } from "@/types/pages";
 
-import { fillGrid } from "@src/helpers/fillGrid";
+import { Mole } from "@/components/Mole/Mole";
 
-import { whacAMoleStore } from "@src/stores/whacAMoleStore";
+import { fillGrid } from "@/helpers/fillGrid";
 
-import "@src/pages/WhacAMolePage/WhacAMolePage.css";
+import { whacAMoleStore } from "@/stores/whacAMoleStore";
 
-const handlePlayAgain = (e: MouseEvent): void => {
-  e.preventDefault();
+import "@/pages/WhacAMolePage/WhacAMolePage.css";
 
-  whacAMoleStore.setResetGame();
-
-  const gameScore =
-    document.querySelector<HTMLParagraphElement>(".game__score");
-  const time = document.querySelector<HTMLSpanElement>(".game__time-number");
-  const btnPlayAgain = document.querySelector<HTMLButtonElement>(
-    ".game__btn-play-again"
-  );
-  const gameGrid = document.querySelector<HTMLDivElement>(".game__grid");
-
-  gameScore!.innerHTML = `Score: <span id="score" class="game__score-number">-</span>`;
-  time!.textContent = "-";
-
-  btnPlayAgain!.style.display = "none";
-  gameGrid!.style.display = "flex";
-
-  fillGrid(gameGrid!, 25);
-
-  whacAMoleStore.setIntervalGame(setInterval(handleSpawnEnemy, 3000));
-  whacAMoleStore.setIntervalTime(setInterval(handleTimer, 1000));
-};
-
-const handleEndGame = () => {
-  const { counter } = whacAMoleStore.getState();
-
-  const gameGrid = document.querySelector<HTMLDivElement>(".game__grid");
-  const btnPlayAgain = document.querySelector<HTMLButtonElement>(
-    ".game__btn-play-again"
-  );
-  const time = document.querySelector<HTMLSpanElement>(".game__time-number");
-  const gameScore =
-    document.querySelector<HTMLParagraphElement>(".game__score");
-
-  time!.textContent = "The time is over";
-  gameScore!.textContent = `You score was ${counter}, Congrats. if you want, push in PLAY AGAIN`;
-  btnPlayAgain!.style.display = "block";
-  gameGrid!.style.display = "none";
-  gameGrid!.innerHTML = "";
-
-  whacAMoleStore.setResetGame();
-};
-
-const handleClickMole = () => {
-  const gameScoreNumber = document.querySelector<HTMLSpanElement>(
-    ".game__score-number"
-  );
-  const mole = document.querySelector<HTMLImageElement>(".mole");
-
-  mole!.remove();
-  whacAMoleStore.setCounterPlus();
-
-  gameScoreNumber!.textContent = String(whacAMoleStore.get("counter"));
-};
-
-const handleSpawnEnemy = () => {
-  const { timeoutSpawn } = whacAMoleStore.getState();
-
-  const gameGrid = document.querySelector<HTMLDivElement>(".game__grid");
-
-  if (timeoutSpawn) whacAMoleStore.clearTimeoutSpawn();
-
-  const spawn = Math.floor(Math.random() * gameGrid!.children!.length);
-
-  const gridItem = document.querySelector<HTMLDivElement>(`#gi-${spawn}`);
-
-  console.log(gridItem);
-
-  const mole = Mole({});
-
-  gridItem!.append(mole);
-
-  mole.addEventListener("click", handleClickMole);
-
-  whacAMoleStore.setTimeoutSpawn(setTimeout(() => mole.remove(), 2000));
-};
-
-function handleTimer(): void {
-  const { runTime } = whacAMoleStore.getState();
-
-  const time = document.querySelector<HTMLSpanElement>(".game__time-number");
-
-  if (runTime <= 0) return handleEndGame();
-
-  whacAMoleStore.setRunTimeMinus();
-  time!.textContent = String(runTime);
-}
-
-export const WhacAMolePage = (): HTMLElement => {
-  const main = document.createElement("main");
+export const WhacAMolePage = (): Page => {
+  const main = document.createElement("main") as Page;
   main.className = "whac-a-mole-page";
 
   main.innerHTML = `
@@ -133,17 +45,137 @@ export const WhacAMolePage = (): HTMLElement => {
     </section>
   `;
 
-  const gameGrid = main.querySelector<HTMLDivElement>(".game__grid");
+  const activeMoles = new Set<HTMLImageElement>();
+
+  const handlePlayAgain = (e: MouseEvent): void => {
+    e.preventDefault();
+
+    whacAMoleStore.cleanup();
+
+    const gameScore = main.querySelector<HTMLParagraphElement>(".game__score")!;
+    const time = main.querySelector<HTMLSpanElement>(".game__time-number")!;
+    const btnPlayAgain = main.querySelector<HTMLButtonElement>(
+      ".game__btn-play-again"
+    )!;
+    const gameGrid = main.querySelector<HTMLDivElement>(".game__grid")!;
+
+    gameScore.innerHTML = `Score: <span id="score" class="game__score-number">-</span>`;
+    time.textContent = "-";
+    btnPlayAgain.style.display = "none";
+    gameGrid.style.display = "flex";
+
+    activeMoles.forEach((mole) => {
+      mole.removeEventListener("click", handleClickMole);
+    });
+    activeMoles.clear();
+
+    fillGrid(gameGrid, 25);
+
+    whacAMoleStore.setIntervalGame(setInterval(handleSpawnEnemy, 3000));
+    whacAMoleStore.setIntervalTime(setInterval(handleTimer, 1000));
+  };
+
+  const handleEndGame = (): void => {
+    const { counter } = whacAMoleStore.getState();
+
+    whacAMoleStore.cleanup();
+
+    const gameGrid = main.querySelector<HTMLDivElement>(".game__grid")!;
+    const btnPlayAgain = main.querySelector<HTMLButtonElement>(
+      ".game__btn-play-again"
+    )!;
+    const time = main.querySelector<HTMLSpanElement>(".game__time-number")!;
+    const gameScore = main.querySelector<HTMLParagraphElement>(".game__score")!;
+
+    time.textContent = "The time is over";
+    gameScore.textContent = `You score was ${counter}, Congrats. if you want, push in PLAY AGAIN`;
+    btnPlayAgain.style.display = "block";
+    gameGrid.style.display = "none";
+    gameGrid.innerHTML = "";
+
+    activeMoles.forEach((mole) => {
+      mole.removeEventListener("click", handleClickMole);
+    });
+    activeMoles.clear();
+  };
+
+  const handleClickMole = (e: MouseEvent): void => {
+    const gameScoreNumber = main.querySelector<HTMLSpanElement>(
+      ".game__score-number"
+    )!;
+    const mole = e.currentTarget as HTMLImageElement;
+
+    mole.removeEventListener("click", handleClickMole);
+    activeMoles.delete(mole);
+
+    mole.remove();
+    whacAMoleStore.setCounterPlus();
+    gameScoreNumber.textContent = String(whacAMoleStore.get("counter"));
+  };
+
+  const handleSpawnEnemy = (): void => {
+    const { timeoutSpawn } = whacAMoleStore.getState();
+
+    const gameGrid = main.querySelector<HTMLDivElement>(".game__grid")!;
+
+    if (timeoutSpawn) whacAMoleStore.clearTimeoutSpawn();
+
+    const spawn = Math.floor(Math.random() * gameGrid.children.length);
+
+    const gridItem = main.querySelector<HTMLDivElement>(`#gi-${spawn}`)!;
+
+    const mole = Mole();
+
+    gridItem.append(mole);
+
+    activeMoles.add(mole);
+    mole.addEventListener("click", handleClickMole);
+
+    whacAMoleStore.setTimeoutSpawn(
+      setTimeout(() => {
+        mole.removeEventListener("click", handleClickMole);
+        activeMoles.delete(mole);
+        mole.remove();
+      }, 2000)
+    );
+  };
+
+  const handleTimer = (): void => {
+    const { runTime } = whacAMoleStore.getState();
+
+    const time = main.querySelector<HTMLSpanElement>(".game__time-number")!;
+
+    if (runTime <= 0) {
+      handleEndGame();
+      return;
+    }
+
+    whacAMoleStore.setRunTimeMinus();
+    time.textContent = String(runTime);
+  };
+
+  const gameGrid = main.querySelector<HTMLDivElement>(".game__grid")!;
   const btnPlayAgain = main.querySelector<HTMLButtonElement>(
     ".game__btn-play-again"
   );
 
-  fillGrid(gameGrid!, 25);
+  fillGrid(gameGrid, 25);
 
   whacAMoleStore.setIntervalGame(setInterval(handleSpawnEnemy, 3000));
   whacAMoleStore.setIntervalTime(setInterval(handleTimer, 1000));
 
   btnPlayAgain?.addEventListener("click", handlePlayAgain);
+
+  main.cleanup = (): void => {
+    whacAMoleStore.cleanup();
+
+    btnPlayAgain?.removeEventListener("click", handlePlayAgain);
+
+    activeMoles.forEach((mole) => {
+      mole.removeEventListener("click", handleClickMole);
+    });
+    activeMoles.clear();
+  };
 
   return main;
 };

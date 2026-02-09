@@ -1,4 +1,4 @@
-import { GridItem } from "@src/components/GridItem/GridItem";
+import { GridItem } from "@/components/GridItem/GridItem";
 
 export const fillGrid = (grid: HTMLDivElement, quantity: number): void => {
   if (grid.children.length > 0) grid.replaceChildren();
