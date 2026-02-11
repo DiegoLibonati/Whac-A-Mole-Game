@@ -2,6 +2,7 @@ import { screen } from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 
 import type { Page } from "@/types/pages";
+import type { MoleComponent, GridItemComponent } from "@/types/components";
 
 import { WhacAMolePage } from "@/pages/WhacAMolePage/WhacAMolePage";
 
@@ -84,7 +85,7 @@ describe("WhacAMolePage", () => {
     it("should render game section", () => {
       const container = renderPage();
 
-      const section = container.querySelector(".game");
+      const section = container.querySelector<HTMLElement>(".game");
 
       expect(section).toBeInTheDocument();
       expect(section?.tagName).toBe("SECTION");
@@ -114,8 +115,9 @@ describe("WhacAMolePage", () => {
     it("should render score display", () => {
       const container = renderPage();
 
-      const score = container.querySelector(".game__score");
-      const scoreNumber = container.querySelector("#score");
+      const score =
+        container.querySelector<HTMLParagraphElement>(".game__score");
+      const scoreNumber = container.querySelector<HTMLSpanElement>("#score");
 
       expect(score).toBeInTheDocument();
       expect(scoreNumber).toBeInTheDocument();
@@ -125,8 +127,8 @@ describe("WhacAMolePage", () => {
     it("should render time display", () => {
       const container = renderPage();
 
-      const time = container.querySelector(".game__time");
-      const timeNumber = container.querySelector("#time");
+      const time = container.querySelector<HTMLParagraphElement>(".game__time");
+      const timeNumber = container.querySelector<HTMLSpanElement>("#time");
 
       expect(time).toBeInTheDocument();
       expect(timeNumber).toBeInTheDocument();
@@ -136,7 +138,7 @@ describe("WhacAMolePage", () => {
     it("should render game grid", () => {
       const container = renderPage();
 
-      const gameGrid = container.querySelector(".game__grid");
+      const gameGrid = container.querySelector<HTMLDivElement>(".game__grid");
 
       expect(gameGrid).toBeInTheDocument();
     });
@@ -155,8 +157,9 @@ describe("WhacAMolePage", () => {
     it("should fill grid with 25 items on mount", () => {
       const container = renderPage();
 
-      const gameGrid = container.querySelector(".game__grid");
-      const gridItems = gameGrid?.querySelectorAll(".grid-item");
+      const gameGrid = container.querySelector<HTMLDivElement>(".game__grid");
+      const gridItems =
+        gameGrid?.querySelectorAll<GridItemComponent>(".grid-item");
 
       expect(gridItems).toHaveLength(25);
     });
@@ -164,10 +167,10 @@ describe("WhacAMolePage", () => {
     it("should create grid items with correct ids", () => {
       const container = renderPage();
 
-      const gameGrid = container.querySelector(".game__grid");
+      const gameGrid = container.querySelector<HTMLDivElement>(".game__grid");
 
       for (let i = 0; i < 25; i++) {
-        const gridItem = gameGrid?.querySelector(`#gi-${i}`);
+        const gridItem = gameGrid?.querySelector<GridItemComponent>(`#gi-${i}`);
         expect(gridItem).toBeInTheDocument();
         expect(gridItem).toHaveClass("grid-item");
       }
@@ -224,7 +227,7 @@ describe("WhacAMolePage", () => {
 
       await user.click(button);
 
-      const scoreNumber = container.querySelector("#score");
+      const scoreNumber = container.querySelector<HTMLSpanElement>("#score");
       expect(scoreNumber).toHaveTextContent("-");
     });
 
@@ -236,7 +239,7 @@ describe("WhacAMolePage", () => {
 
       await user.click(button);
 
-      const timeNumber = container.querySelector("#time");
+      const timeNumber = container.querySelector<HTMLSpanElement>("#time");
       expect(timeNumber).toHaveTextContent("-");
     });
 
@@ -259,8 +262,9 @@ describe("WhacAMolePage", () => {
 
       await user.click(button);
 
-      const gameGrid = container.querySelector(".game__grid");
-      const gridItems = gameGrid?.querySelectorAll(".grid-item");
+      const gameGrid = container.querySelector<HTMLDivElement>(".game__grid");
+      const gridItems =
+        gameGrid?.querySelectorAll<GridItemComponent>(".grid-item");
 
       expect(gameGrid).toHaveStyle({ display: "flex" });
       expect(gridItems).toHaveLength(25);
@@ -270,14 +274,15 @@ describe("WhacAMolePage", () => {
       const user = userEvent.setup({ delay: null });
       const container = renderPage();
 
-      const gameGrid = container.querySelector(".game__grid");
-      const initialFirstItem = gameGrid?.querySelector("#gi-0");
+      const gameGrid = container.querySelector<HTMLDivElement>(".game__grid");
+      const initialFirstItem =
+        gameGrid?.querySelector<GridItemComponent>("#gi-0");
 
       const button = screen.getByRole("button", { name: /play again/i });
 
       await user.click(button);
 
-      const newFirstItem = gameGrid?.querySelector("#gi-0");
+      const newFirstItem = gameGrid?.querySelector<GridItemComponent>("#gi-0");
 
       expect(newFirstItem).toBeInTheDocument();
       expect(newFirstItem).not.toBe(initialFirstItem);
@@ -346,7 +351,8 @@ describe("WhacAMolePage", () => {
 
       jest.advanceTimersByTime(1000);
 
-      const timeNumber = container.querySelector(".game__time-number");
+      const timeNumber =
+        container.querySelector<HTMLSpanElement>(".game__time-number");
       expect(timeNumber).toHaveTextContent("The time is over");
     });
 
@@ -363,7 +369,8 @@ describe("WhacAMolePage", () => {
 
       jest.advanceTimersByTime(1000);
 
-      const gameScore = container.querySelector(".game__score");
+      const gameScore =
+        container.querySelector<HTMLParagraphElement>(".game__score");
       expect(gameScore).toHaveTextContent(/you score was 15/i);
       expect(gameScore).toHaveTextContent(/push in play again/i);
     });
@@ -398,7 +405,7 @@ describe("WhacAMolePage", () => {
 
       jest.advanceTimersByTime(1000);
 
-      const gameGrid = container.querySelector(".game__grid");
+      const gameGrid = container.querySelector<HTMLDivElement>(".game__grid");
       expect(gameGrid).toHaveStyle({ display: "none" });
       expect(gameGrid?.innerHTML).toBe("");
     });
@@ -423,9 +430,11 @@ describe("WhacAMolePage", () => {
   describe("Mole Spawning", () => {
     it("should spawn mole in random grid item after 3 seconds", () => {
       const container = renderPage();
-      const gameGrid = container.querySelector(".game__grid");
+      const gameGrid = container.querySelector<HTMLDivElement>(".game__grid");
 
-      expect(gameGrid?.querySelector(".mole")).not.toBeInTheDocument();
+      expect(
+        gameGrid?.querySelector<MoleComponent>(".mole")
+      ).not.toBeInTheDocument();
 
       jest.advanceTimersByTime(3000);
 
@@ -456,7 +465,7 @@ describe("WhacAMolePage", () => {
 
       jest.advanceTimersByTime(3000);
 
-      container.querySelector("#gi-12");
+      container.querySelector<GridItemComponent>("#gi-12");
       expect(whacAMoleStore.setTimeoutSpawn).toHaveBeenCalled();
     });
   });
@@ -464,7 +473,7 @@ describe("WhacAMolePage", () => {
   describe("Mole Click Functionality", () => {
     it("should have mole click handler attached when spawned", () => {
       const container = renderPage();
-      const gameGrid = container.querySelector(".game__grid");
+      const gameGrid = container.querySelector<HTMLDivElement>(".game__grid");
 
       expect(gameGrid).toBeInTheDocument();
       expect(gameGrid?.children).toHaveLength(25);
@@ -475,17 +484,26 @@ describe("WhacAMolePage", () => {
     it("should have all game sections", () => {
       const container = renderPage();
 
-      expect(container.querySelector(".game__explication")).toBeInTheDocument();
-      expect(container.querySelector(".game__stats")).toBeInTheDocument();
-      expect(container.querySelector(".game__grid")).toBeInTheDocument();
-      expect(container.querySelector(".game__actions")).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLDivElement>(".game__explication")
+      ).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLDivElement>(".game__stats")
+      ).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLDivElement>(".game__grid")
+      ).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLDivElement>(".game__actions")
+      ).toBeInTheDocument();
     });
 
     it("should nest sections correctly", () => {
       const container = renderPage();
 
-      const gameSection = container.querySelector(".game");
-      const explication = container.querySelector(".game__explication");
+      const gameSection = container.querySelector<HTMLElement>(".game");
+      const explication =
+        container.querySelector<HTMLDivElement>(".game__explication");
 
       expect(explication?.parentElement).toBe(gameSection);
     });
@@ -493,8 +511,8 @@ describe("WhacAMolePage", () => {
     it("should have grid items as children of game grid", () => {
       const container = renderPage();
 
-      const gameGrid = container.querySelector(".game__grid");
-      const firstGridItem = gameGrid?.querySelector("#gi-0");
+      const gameGrid = container.querySelector<HTMLDivElement>(".game__grid");
+      const firstGridItem = gameGrid?.querySelector<GridItemComponent>("#gi-0");
 
       expect(firstGridItem?.parentElement).toBe(gameGrid);
     });
@@ -521,10 +539,12 @@ describe("WhacAMolePage", () => {
       const user = userEvent.setup({ delay: null });
       const container = renderPage();
 
-      const gameGrid = container.querySelector(".game__grid");
-      const gridItem = gameGrid?.querySelector("#gi-0");
+      const gameGrid = container.querySelector<HTMLDivElement>(".game__grid");
+      const gridItem = gameGrid?.querySelector<GridItemComponent>("#gi-0");
 
-      expect(gridItem?.querySelector(".mole")).not.toBeInTheDocument();
+      expect(
+        gridItem?.querySelector<MoleComponent>(".mole")
+      ).not.toBeInTheDocument();
 
       if (gridItem) {
         await expect(user.click(gridItem)).resolves.not.toThrow();

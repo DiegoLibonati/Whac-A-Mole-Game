@@ -97,7 +97,7 @@ describe("Mole", () => {
       renderComponent();
       renderComponent();
 
-      const moles = document.querySelectorAll(".mole");
+      const moles = document.querySelectorAll<MoleComponent>(".mole");
 
       expect(moles).toHaveLength(2);
       moles.forEach((mole) => {
@@ -148,7 +148,7 @@ describe("Mole", () => {
     it("should be queryable by class", () => {
       renderComponent();
 
-      const mole = document.querySelector(".mole");
+      const mole = document.querySelector<MoleComponent>(".mole");
 
       expect(mole).toBeInTheDocument();
       expect(mole?.tagName).toBe("IMG");

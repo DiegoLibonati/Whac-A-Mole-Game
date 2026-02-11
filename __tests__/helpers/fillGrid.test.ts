@@ -1,3 +1,5 @@
+import type { GridItemComponent } from "@/types/components";
+
 import { fillGrid } from "@/helpers/fillGrid";
 
 describe("fillGrid", () => {
@@ -24,7 +26,9 @@ describe("fillGrid", () => {
       fillGrid(gridContainer, 5);
 
       for (let i = 0; i < 5; i++) {
-        const gridItem = gridContainer.querySelector(`#gi-${i}`);
+        const gridItem = gridContainer.querySelector<GridItemComponent>(
+          `#gi-${i}`
+        );
         expect(gridItem).toBeInTheDocument();
         expect(gridItem?.id).toBe(`gi-${i}`);
       }
@@ -33,7 +37,8 @@ describe("fillGrid", () => {
     it("should create grid items with correct class", () => {
       fillGrid(gridContainer, 3);
 
-      const gridItems = gridContainer.querySelectorAll(".grid-item");
+      const gridItems =
+        gridContainer.querySelectorAll<GridItemComponent>(".grid-item");
 
       expect(gridItems).toHaveLength(3);
       gridItems.forEach((item) => {
@@ -57,7 +62,9 @@ describe("fillGrid", () => {
       fillGrid(gridContainer, 1);
 
       expect(gridContainer.children).toHaveLength(1);
-      expect(gridContainer.querySelector("#gi-0")).toBeInTheDocument();
+      expect(
+        gridContainer.querySelector<GridItemComponent>("#gi-0")
+      ).toBeInTheDocument();
     });
 
     it("should handle zero items", () => {
@@ -71,8 +78,12 @@ describe("fillGrid", () => {
       fillGrid(gridContainer, 100);
 
       expect(gridContainer.children).toHaveLength(100);
-      expect(gridContainer.querySelector("#gi-0")).toBeInTheDocument();
-      expect(gridContainer.querySelector("#gi-99")).toBeInTheDocument();
+      expect(
+        gridContainer.querySelector<GridItemComponent>("#gi-0")
+      ).toBeInTheDocument();
+      expect(
+        gridContainer.querySelector<GridItemComponent>("#gi-99")
+      ).toBeInTheDocument();
     });
 
     it("should create 25 items for standard game grid", () => {
@@ -81,7 +92,9 @@ describe("fillGrid", () => {
       expect(gridContainer.children).toHaveLength(25);
 
       for (let i = 0; i < 25; i++) {
-        expect(gridContainer.querySelector(`#gi-${i}`)).toBeInTheDocument();
+        expect(
+          gridContainer.querySelector<GridItemComponent>(`#gi-${i}`)
+        ).toBeInTheDocument();
       }
     });
   });
@@ -105,13 +118,16 @@ describe("fillGrid", () => {
     it("should replace old grid items with new ones", () => {
       fillGrid(gridContainer, 3);
 
-      const firstItem = gridContainer.querySelector("#gi-0");
-      const secondItem = gridContainer.querySelector("#gi-1");
+      const firstItem = gridContainer.querySelector<GridItemComponent>("#gi-0");
+      const secondItem =
+        gridContainer.querySelector<GridItemComponent>("#gi-1");
 
       fillGrid(gridContainer, 3);
 
-      const newFirstItem = gridContainer.querySelector("#gi-0");
-      const newSecondItem = gridContainer.querySelector("#gi-1");
+      const newFirstItem =
+        gridContainer.querySelector<GridItemComponent>("#gi-0");
+      const newSecondItem =
+        gridContainer.querySelector<GridItemComponent>("#gi-1");
 
       expect(newFirstItem).toBeInTheDocument();
       expect(newSecondItem).toBeInTheDocument();
@@ -147,7 +163,8 @@ describe("fillGrid", () => {
     it("should create div elements", () => {
       fillGrid(gridContainer, 5);
 
-      const gridItems = gridContainer.querySelectorAll(".grid-item");
+      const gridItems =
+        gridContainer.querySelectorAll<GridItemComponent>(".grid-item");
 
       gridItems.forEach((item) => {
         expect(item.tagName).toBe("DIV");
@@ -167,7 +184,8 @@ describe("fillGrid", () => {
     it("should create empty grid items", () => {
       fillGrid(gridContainer, 5);
 
-      const gridItems = gridContainer.querySelectorAll(".grid-item");
+      const gridItems =
+        gridContainer.querySelectorAll<GridItemComponent>(".grid-item");
 
       gridItems.forEach((item) => {
         expect(item.children).toHaveLength(0);
@@ -187,8 +205,12 @@ describe("fillGrid", () => {
       fillGrid(gridContainer, 1000);
 
       expect(gridContainer.children).toHaveLength(1000);
-      expect(gridContainer.querySelector("#gi-0")).toBeInTheDocument();
-      expect(gridContainer.querySelector("#gi-999")).toBeInTheDocument();
+      expect(
+        gridContainer.querySelector<GridItemComponent>("#gi-0")
+      ).toBeInTheDocument();
+      expect(
+        gridContainer.querySelector<GridItemComponent>("#gi-999")
+      ).toBeInTheDocument();
     });
 
     it("should work with grid that has inline styles", () => {
@@ -225,12 +247,20 @@ describe("fillGrid", () => {
 
     it("should reset ids on each fill", () => {
       fillGrid(gridContainer, 3);
-      expect(gridContainer.querySelector("#gi-0")).toBeInTheDocument();
-      expect(gridContainer.querySelector("#gi-2")).toBeInTheDocument();
+      expect(
+        gridContainer.querySelector<GridItemComponent>("#gi-0")
+      ).toBeInTheDocument();
+      expect(
+        gridContainer.querySelector<GridItemComponent>("#gi-2")
+      ).toBeInTheDocument();
 
       fillGrid(gridContainer, 5);
-      expect(gridContainer.querySelector("#gi-0")).toBeInTheDocument();
-      expect(gridContainer.querySelector("#gi-4")).toBeInTheDocument();
+      expect(
+        gridContainer.querySelector<GridItemComponent>("#gi-0")
+      ).toBeInTheDocument();
+      expect(
+        gridContainer.querySelector<GridItemComponent>("#gi-4")
+      ).toBeInTheDocument();
     });
 
     it("should maintain grid container reference", () => {
@@ -249,9 +279,9 @@ describe("fillGrid", () => {
     it("should create grid items that can be queried individually", () => {
       fillGrid(gridContainer, 25);
 
-      const item0 = document.getElementById("gi-0");
-      const item12 = document.getElementById("gi-12");
-      const item24 = document.getElementById("gi-24");
+      const item0 = document.querySelector<GridItemComponent>("#gi-0");
+      const item12 = document.querySelector<GridItemComponent>("#gi-12");
+      const item24 = document.querySelector<GridItemComponent>("#gi-24");
 
       expect(item0).toBeInTheDocument();
       expect(item12).toBeInTheDocument();
@@ -261,22 +291,25 @@ describe("fillGrid", () => {
     it("should allow adding content to grid items after creation", () => {
       fillGrid(gridContainer, 5);
 
-      const firstItem = gridContainer.querySelector("#gi-0");
+      const firstItem = gridContainer.querySelector<GridItemComponent>("#gi-0");
       const img = document.createElement("img");
       img.src = "test.png";
 
       firstItem?.appendChild(img);
 
       expect(firstItem?.children).toHaveLength(1);
-      expect(firstItem?.querySelector("img")).toBeInTheDocument();
+      expect(
+        firstItem?.querySelector<HTMLImageElement>("img")
+      ).toBeInTheDocument();
     });
 
     it("should work with querySelector selectors", () => {
       fillGrid(gridContainer, 10);
 
-      const allItems = gridContainer.querySelectorAll(".grid-item");
-      const firstItem = gridContainer.querySelector("#gi-0");
-      const lastItem = gridContainer.querySelector("#gi-9");
+      const allItems =
+        gridContainer.querySelectorAll<GridItemComponent>(".grid-item");
+      const firstItem = gridContainer.querySelector<GridItemComponent>("#gi-0");
+      const lastItem = gridContainer.querySelector<GridItemComponent>("#gi-9");
 
       expect(allItems).toHaveLength(10);
       expect(firstItem).toBeInTheDocument();
