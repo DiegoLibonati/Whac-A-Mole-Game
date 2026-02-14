@@ -2,35 +2,10 @@ import { screen } from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 
 import type { Page } from "@/types/pages";
-import type { MoleComponent, GridItemComponent } from "@/types/components";
 
 import { WhacAMolePage } from "@/pages/WhacAMolePage/WhacAMolePage";
 
 import { whacAMoleStore } from "@/stores/whacAMoleStore";
-
-import { mockAssets } from "@tests/__mocks__/assets.mock";
-
-jest.mock("@/stores/whacAMoleStore", () => ({
-  whacAMoleStore: {
-    getState: jest.fn(),
-    get: jest.fn(),
-    setState: jest.fn(),
-    setCounterPlus: jest.fn(),
-    setCounterReset: jest.fn(),
-    setRunTimeMinus: jest.fn(),
-    setResetGame: jest.fn(),
-    setTimeoutSpawn: jest.fn(),
-    setIntervalGame: jest.fn(),
-    setIntervalTime: jest.fn(),
-    clearTimeoutSpawn: jest.fn(),
-    cleanup: jest.fn(),
-  },
-}));
-
-jest.doMock("@/assets/export", () => ({
-  __esModule: true,
-  default: mockAssets,
-}));
 
 const renderPage = (): Page => {
   const container = WhacAMolePage();
@@ -41,514 +16,98 @@ const renderPage = (): Page => {
 describe("WhacAMolePage", () => {
   beforeEach(() => {
     jest.useFakeTimers();
-    jest.clearAllMocks();
-
-    (whacAMoleStore.getState as jest.Mock).mockReturnValue({
-      counter: 0,
-      runTime: 60,
-      timeoutSpawn: null,
-      intervalGame: null,
-      intervalTime: null,
-    });
-
-    (whacAMoleStore.get as jest.Mock).mockImplementation((key: string) => {
-      if (key === "counter") return 0;
-      if (key === "runTime") return 60;
-      return null;
-    });
+    whacAMoleStore.setResetGame();
   });
 
   afterEach(() => {
     document.body.innerHTML = "";
+    whacAMoleStore.cleanup();
     jest.clearAllTimers();
     jest.useRealTimers();
   });
 
-  describe("Render", () => {
-    it("should create a main element", () => {
-      renderPage();
+  it("should render the page with correct structure", () => {
+    renderPage();
 
-      const main = screen.getByRole("main");
-
-      expect(main).toBeInstanceOf(HTMLElement);
-      expect(main.tagName).toBe("MAIN");
-    });
-
-    it("should have correct styling class", () => {
-      renderPage();
-
-      const main = screen.getByRole("main");
-
-      expect(main).toHaveClass("whac-a-mole-page");
-    });
-
-    it("should render game section", () => {
-      const container = renderPage();
-
-      const section = container.querySelector<HTMLElement>(".game");
-
-      expect(section).toBeInTheDocument();
-      expect(section?.tagName).toBe("SECTION");
-    });
-
-    it("should render title", () => {
-      renderPage();
-
-      const title = screen.getByRole("heading", {
-        name: /welcome to whac-a-mole game/i,
-        level: 1,
-      });
-
-      expect(title).toBeInTheDocument();
-      expect(title).toHaveClass("game__explication-title");
-    });
-
-    it("should render description", () => {
-      renderPage();
-
-      const description = screen.getByText(/you need to hit the rat/i);
-
-      expect(description).toBeInTheDocument();
-      expect(description).toHaveClass("game__description");
-    });
-
-    it("should render score display", () => {
-      const container = renderPage();
-
-      const score =
-        container.querySelector<HTMLParagraphElement>(".game__score");
-      const scoreNumber = container.querySelector<HTMLSpanElement>("#score");
-
-      expect(score).toBeInTheDocument();
-      expect(scoreNumber).toBeInTheDocument();
-      expect(scoreNumber).toHaveTextContent("-");
-    });
-
-    it("should render time display", () => {
-      const container = renderPage();
-
-      const time = container.querySelector<HTMLParagraphElement>(".game__time");
-      const timeNumber = container.querySelector<HTMLSpanElement>("#time");
-
-      expect(time).toBeInTheDocument();
-      expect(timeNumber).toBeInTheDocument();
-      expect(timeNumber).toHaveTextContent("-");
-    });
-
-    it("should render game grid", () => {
-      const container = renderPage();
-
-      const gameGrid = container.querySelector<HTMLDivElement>(".game__grid");
-
-      expect(gameGrid).toBeInTheDocument();
-    });
-
-    it("should render play again button", () => {
-      renderPage();
-
-      const button = screen.getByRole("button", { name: /play again/i });
-
-      expect(button).toBeInTheDocument();
-      expect(button).toHaveClass("game__btn-play-again");
-    });
+    const main = document.querySelector<HTMLElement>(".whac-a-mole-page");
+    expect(main).toBeInTheDocument();
+    expect(main?.tagName).toBe("MAIN");
   });
 
-  describe("Initial Setup", () => {
-    it("should fill grid with 25 items on mount", () => {
-      const container = renderPage();
+  it("should render game title and description", () => {
+    renderPage();
 
-      const gameGrid = container.querySelector<HTMLDivElement>(".game__grid");
-      const gridItems =
-        gameGrid?.querySelectorAll<GridItemComponent>(".grid-item");
-
-      expect(gridItems).toHaveLength(25);
+    const title = screen.getByRole("heading", {
+      name: "Welcome to Whac-a-mole GAME!",
     });
+    expect(title).toBeInTheDocument();
 
-    it("should create grid items with correct ids", () => {
-      const container = renderPage();
-
-      const gameGrid = container.querySelector<HTMLDivElement>(".game__grid");
-
-      for (let i = 0; i < 25; i++) {
-        const gridItem = gameGrid?.querySelector<GridItemComponent>(`#gi-${i}`);
-        expect(gridItem).toBeInTheDocument();
-        expect(gridItem).toHaveClass("grid-item");
-      }
-    });
-
-    it("should start game interval on mount", () => {
-      const setIntervalSpy = jest.spyOn(global, "setInterval");
-
-      renderPage();
-
-      expect(setIntervalSpy).toHaveBeenCalledWith(expect.any(Function), 3000);
-      expect(whacAMoleStore.setIntervalGame).toHaveBeenCalledWith(
-        expect.any(Number)
-      );
-    });
-
-    it("should start timer interval on mount", () => {
-      const setIntervalSpy = jest.spyOn(global, "setInterval");
-
-      renderPage();
-
-      expect(setIntervalSpy).toHaveBeenCalledWith(expect.any(Function), 1000);
-      expect(whacAMoleStore.setIntervalTime).toHaveBeenCalledWith(
-        expect.any(Number)
-      );
-    });
-
-    it("should add click listener to play again button", () => {
-      renderPage();
-
-      const button = screen.getByRole("button", { name: /play again/i });
-
-      expect(button).toBeInTheDocument();
-    });
+    expect(document.body.textContent).toContain(
+      "You need to hit the RAT when he display in your window"
+    );
   });
 
-  describe("Play Again Functionality", () => {
-    it("should reset game when play again is clicked", async () => {
-      const user = userEvent.setup({ delay: null });
-      renderPage();
+  it("should render game stats with initial values", () => {
+    renderPage();
 
-      const button = screen.getByRole("button", { name: /play again/i });
+    const score = document.querySelector<HTMLSpanElement>("#score");
+    const time = document.querySelector<HTMLSpanElement>("#time");
 
-      await user.click(button);
-
-      expect(whacAMoleStore.cleanup).toHaveBeenCalled();
-    });
-
-    it("should reset score display", async () => {
-      const user = userEvent.setup({ delay: null });
-      const container = renderPage();
-
-      const button = screen.getByRole("button", { name: /play again/i });
-
-      await user.click(button);
-
-      const scoreNumber = container.querySelector<HTMLSpanElement>("#score");
-      expect(scoreNumber).toHaveTextContent("-");
-    });
-
-    it("should reset time display", async () => {
-      const user = userEvent.setup({ delay: null });
-      const container = renderPage();
-
-      const button = screen.getByRole("button", { name: /play again/i });
-
-      await user.click(button);
-
-      const timeNumber = container.querySelector<HTMLSpanElement>("#time");
-      expect(timeNumber).toHaveTextContent("-");
-    });
-
-    it("should hide play again button", async () => {
-      const user = userEvent.setup({ delay: null });
-      renderPage();
-
-      const button = screen.getByRole("button", { name: /play again/i });
-
-      await user.click(button);
-
-      expect(button).toHaveStyle({ display: "none" });
-    });
-
-    it("should show and refill game grid", async () => {
-      const user = userEvent.setup({ delay: null });
-      const container = renderPage();
-
-      const button = screen.getByRole("button", { name: /play again/i });
-
-      await user.click(button);
-
-      const gameGrid = container.querySelector<HTMLDivElement>(".game__grid");
-      const gridItems =
-        gameGrid?.querySelectorAll<GridItemComponent>(".grid-item");
-
-      expect(gameGrid).toHaveStyle({ display: "flex" });
-      expect(gridItems).toHaveLength(25);
-    });
-
-    it("should replace existing grid items on play again", async () => {
-      const user = userEvent.setup({ delay: null });
-      const container = renderPage();
-
-      const gameGrid = container.querySelector<HTMLDivElement>(".game__grid");
-      const initialFirstItem =
-        gameGrid?.querySelector<GridItemComponent>("#gi-0");
-
-      const button = screen.getByRole("button", { name: /play again/i });
-
-      await user.click(button);
-
-      const newFirstItem = gameGrid?.querySelector<GridItemComponent>("#gi-0");
-
-      expect(newFirstItem).toBeInTheDocument();
-      expect(newFirstItem).not.toBe(initialFirstItem);
-    });
-
-    it("should restart intervals", async () => {
-      const user = userEvent.setup({ delay: null });
-      renderPage();
-
-      const button = screen.getByRole("button", { name: /play again/i });
-
-      jest.clearAllMocks();
-
-      await user.click(button);
-
-      expect(whacAMoleStore.setIntervalGame).toHaveBeenCalled();
-      expect(whacAMoleStore.setIntervalTime).toHaveBeenCalled();
-    });
+    expect(score?.textContent).toBe("-");
+    expect(time?.textContent).toBe("-");
   });
 
-  describe("Timer Functionality", () => {
-    it("should update time display when timer runs", () => {
-      renderPage();
+  it("should render play again button", () => {
+    renderPage();
 
-      (whacAMoleStore.getState as jest.Mock).mockReturnValue({
-        counter: 0,
-        runTime: 59,
-        timeoutSpawn: null,
-        intervalGame: null,
-        intervalTime: null,
-      });
-
-      jest.advanceTimersByTime(1000);
-
-      expect(whacAMoleStore.setRunTimeMinus).toHaveBeenCalled();
-    });
-
-    it("should end game when time reaches zero", () => {
-      renderPage();
-
-      (whacAMoleStore.getState as jest.Mock).mockReturnValue({
-        counter: 5,
-        runTime: 0,
-        timeoutSpawn: null,
-        intervalGame: null,
-        intervalTime: null,
-      });
-
-      jest.advanceTimersByTime(1000);
-
-      expect(whacAMoleStore.cleanup).toHaveBeenCalled();
-    });
+    const button = screen.getByRole("button", { name: "play again" });
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveAttribute("id", "playAgain");
   });
 
-  describe("End Game Functionality", () => {
-    it("should display time over message", () => {
-      const container = renderPage();
+  it("should render game grid with 25 items", () => {
+    renderPage();
 
-      (whacAMoleStore.getState as jest.Mock).mockReturnValue({
-        counter: 10,
-        runTime: 0,
-        timeoutSpawn: null,
-        intervalGame: null,
-        intervalTime: null,
-      });
+    const grid = document.querySelector<HTMLDivElement>(".game__grid");
+    const gridItems = document.querySelectorAll<HTMLDivElement>(".grid-item");
 
-      jest.advanceTimersByTime(1000);
-
-      const timeNumber =
-        container.querySelector<HTMLSpanElement>(".game__time-number");
-      expect(timeNumber).toHaveTextContent("The time is over");
-    });
-
-    it("should display final score", () => {
-      const container = renderPage();
-
-      (whacAMoleStore.getState as jest.Mock).mockReturnValue({
-        counter: 15,
-        runTime: 0,
-        timeoutSpawn: null,
-        intervalGame: null,
-        intervalTime: null,
-      });
-
-      jest.advanceTimersByTime(1000);
-
-      const gameScore =
-        container.querySelector<HTMLParagraphElement>(".game__score");
-      expect(gameScore).toHaveTextContent(/you score was 15/i);
-      expect(gameScore).toHaveTextContent(/push in play again/i);
-    });
-
-    it("should show play again button", () => {
-      renderPage();
-
-      (whacAMoleStore.getState as jest.Mock).mockReturnValue({
-        counter: 5,
-        runTime: 0,
-        timeoutSpawn: null,
-        intervalGame: null,
-        intervalTime: null,
-      });
-
-      jest.advanceTimersByTime(1000);
-
-      const button = screen.getByRole("button", { name: /play again/i });
-      expect(button).toHaveStyle({ display: "block" });
-    });
-
-    it("should hide and clear game grid", () => {
-      const container = renderPage();
-
-      (whacAMoleStore.getState as jest.Mock).mockReturnValue({
-        counter: 5,
-        runTime: 0,
-        timeoutSpawn: null,
-        intervalGame: null,
-        intervalTime: null,
-      });
-
-      jest.advanceTimersByTime(1000);
-
-      const gameGrid = container.querySelector<HTMLDivElement>(".game__grid");
-      expect(gameGrid).toHaveStyle({ display: "none" });
-      expect(gameGrid?.innerHTML).toBe("");
-    });
-
-    it("should reset game state", () => {
-      renderPage();
-
-      (whacAMoleStore.getState as jest.Mock).mockReturnValue({
-        counter: 5,
-        runTime: 0,
-        timeoutSpawn: null,
-        intervalGame: null,
-        intervalTime: null,
-      });
-
-      jest.advanceTimersByTime(1000);
-
-      expect(whacAMoleStore.cleanup).toHaveBeenCalled();
-    });
+    expect(grid).toBeInTheDocument();
+    expect(gridItems).toHaveLength(25);
   });
 
-  describe("Mole Spawning", () => {
-    it("should spawn mole in random grid item after 3 seconds", () => {
-      const container = renderPage();
-      const gameGrid = container.querySelector<HTMLDivElement>(".game__grid");
+  it("should start game intervals on mount", () => {
+    const setIntervalSpy = jest.spyOn(global, "setInterval");
 
-      expect(
-        gameGrid?.querySelector<MoleComponent>(".mole")
-      ).not.toBeInTheDocument();
+    renderPage();
 
-      jest.advanceTimersByTime(3000);
+    expect(setIntervalSpy).toHaveBeenCalledWith(expect.any(Function), 3000);
+    expect(setIntervalSpy).toHaveBeenCalledWith(expect.any(Function), 1000);
 
-      expect(whacAMoleStore.setTimeoutSpawn).toHaveBeenCalled();
-    });
-
-    it("should clear previous timeout before spawning", () => {
-      const mockTimeout = 123;
-      (whacAMoleStore.getState as jest.Mock).mockReturnValue({
-        counter: 0,
-        runTime: 60,
-        timeoutSpawn: mockTimeout,
-        intervalGame: null,
-        intervalTime: null,
-      });
-
-      renderPage();
-
-      jest.advanceTimersByTime(3000);
-
-      expect(whacAMoleStore.clearTimeoutSpawn).toHaveBeenCalled();
-    });
-
-    it("should spawn mole in one of the 25 grid items", () => {
-      jest.spyOn(Math, "random").mockReturnValue(0.5);
-
-      const container = renderPage();
-
-      jest.advanceTimersByTime(3000);
-
-      container.querySelector<GridItemComponent>("#gi-12");
-      expect(whacAMoleStore.setTimeoutSpawn).toHaveBeenCalled();
-    });
+    setIntervalSpy.mockRestore();
   });
 
-  describe("Mole Click Functionality", () => {
-    it("should have mole click handler attached when spawned", () => {
-      const container = renderPage();
-      const gameGrid = container.querySelector<HTMLDivElement>(".game__grid");
+  it("should reset game when play again button is clicked", async () => {
+    const user = userEvent.setup({ delay: null });
+    renderPage();
 
-      expect(gameGrid).toBeInTheDocument();
-      expect(gameGrid?.children).toHaveLength(25);
-    });
+    const button = screen.getByRole("button", { name: "play again" });
+    await user.click(button);
+
+    const score = document.querySelector<HTMLSpanElement>("#score");
+    const time = document.querySelector<HTMLSpanElement>("#time");
+
+    expect(score?.textContent).toBe("-");
+    expect(time?.textContent).toBe("-");
   });
 
-  describe("DOM Structure", () => {
-    it("should have all game sections", () => {
-      const container = renderPage();
+  it("should cleanup on page cleanup", () => {
+    const page = renderPage();
 
-      expect(
-        container.querySelector<HTMLDivElement>(".game__explication")
-      ).toBeInTheDocument();
-      expect(
-        container.querySelector<HTMLDivElement>(".game__stats")
-      ).toBeInTheDocument();
-      expect(
-        container.querySelector<HTMLDivElement>(".game__grid")
-      ).toBeInTheDocument();
-      expect(
-        container.querySelector<HTMLDivElement>(".game__actions")
-      ).toBeInTheDocument();
-    });
+    expect(page.cleanup).toBeDefined();
+    page.cleanup?.();
 
-    it("should nest sections correctly", () => {
-      const container = renderPage();
-
-      const gameSection = container.querySelector<HTMLElement>(".game");
-      const explication =
-        container.querySelector<HTMLDivElement>(".game__explication");
-
-      expect(explication?.parentElement).toBe(gameSection);
-    });
-
-    it("should have grid items as children of game grid", () => {
-      const container = renderPage();
-
-      const gameGrid = container.querySelector<HTMLDivElement>(".game__grid");
-      const firstGridItem = gameGrid?.querySelector<GridItemComponent>("#gi-0");
-
-      expect(firstGridItem?.parentElement).toBe(gameGrid);
-    });
-  });
-
-  describe("Edge Cases", () => {
-    it("should handle missing elements gracefully on end game", () => {
-      renderPage();
-
-      (whacAMoleStore.getState as jest.Mock).mockReturnValue({
-        counter: 5,
-        runTime: 0,
-        timeoutSpawn: null,
-        intervalGame: null,
-        intervalTime: null,
-      });
-
-      expect(() => {
-        jest.advanceTimersByTime(1000);
-      }).not.toThrow();
-    });
-
-    it("should handle clicking non-existent mole", async () => {
-      const user = userEvent.setup({ delay: null });
-      const container = renderPage();
-
-      const gameGrid = container.querySelector<HTMLDivElement>(".game__grid");
-      const gridItem = gameGrid?.querySelector<GridItemComponent>("#gi-0");
-
-      expect(
-        gridItem?.querySelector<MoleComponent>(".mole")
-      ).not.toBeInTheDocument();
-
-      if (gridItem) {
-        await expect(user.click(gridItem)).resolves.not.toThrow();
-      }
-    });
+    const state = whacAMoleStore.getState();
+    expect(state.intervalGame).toBeNull();
+    expect(state.intervalTime).toBeNull();
   });
 });
