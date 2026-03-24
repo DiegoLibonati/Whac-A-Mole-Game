@@ -4,24 +4,24 @@
   --color-secondary: #273469;
   --color-white: #ffffff;
   --color-black: #000000;
-  --color-black-int: 0, 0, 0;
+  --color-black-rgb: 0, 0, 0;
 
   /* Typography */
   --font-family-primary: "Titillium Web", Helvetica, sans-serif;
-  --font-size-base: 10px;
-  --font-size-sm: 0.875rem;
-  --font-size-lg: 1.25rem;
-  --font-size-xl: 1.5rem;
+  --font-size-base: 16px;
+  --font-size-sm: 0.547rem;
+  --font-size-lg: 0.781rem;
+  --font-size-xl: 0.9375rem;
 
   /* Spacing */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
+  --spacing-xs: 0.156rem;
+  --spacing-sm: 0.3125rem;
+  --spacing-md: 0.625rem;
+  --spacing-lg: 0.9375rem;
+  --spacing-xl: 1.25rem;
 
   /* Layout */
-  --header-height: 4rem;
+  --header-height: 2.5rem;
 }
 
 *,
@@ -77,25 +77,25 @@ a {
   justify-content: space-evenly;
   align-items: center;
   width: 100%;
-  height: 10rem;
-  border: 0.1rem solid var(--color-white);
+  height: 6.25rem;
+  border: 0.0625rem solid var(--color-white);
   background: var(--color-secondary);
 }
 
 .header__picture,
 .header__content {
-  margin: 1rem;
+  margin: 0.625rem;
 }
 
 .header__logo {
-  height: 10rem;
-  width: 10rem;
+  height: 6.25rem;
+  width: 6.25rem;
   object-fit: cover;
 }
 
 .header__title {
-  font-size: 3rem;
-  letter-spacing: 0.2rem;
+  font-size: 1.875rem;
+  letter-spacing: 0.125rem;
   text-align: center;
   color: var(--color-white);
 }

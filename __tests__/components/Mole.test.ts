@@ -20,6 +20,6 @@ describe("Mole Component", () => {
     expect(mole).toBeInTheDocument();
     expect(mole?.tagName).toBe("IMG");
     expect(mole).toHaveAttribute("src", "/images/rat.png");
-    expect(mole).toHaveAttribute("alt", "mole");
+    expect(mole).toHaveAttribute("alt", "Rat - click to whack");
   });
 });

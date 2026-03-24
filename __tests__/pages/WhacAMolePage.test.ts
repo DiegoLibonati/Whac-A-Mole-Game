@@ -60,7 +60,7 @@ describe("WhacAMolePage", () => {
   it("should render play again button", () => {
     renderPage();
 
-    const button = screen.getByRole("button", { name: "play again" });
+    const button = screen.getByRole("button", { name: "Play again" });
     expect(button).toBeInTheDocument();
     expect(button).toHaveAttribute("id", "playAgain");
   });
@@ -90,7 +90,7 @@ describe("WhacAMolePage", () => {
     const user = userEvent.setup({ delay: null });
     renderPage();
 
-    const button = screen.getByRole("button", { name: "play again" });
+    const button = screen.getByRole("button", { name: "Play again" });
     await user.click(button);
 
     const score = document.querySelector<HTMLSpanElement>("#score");

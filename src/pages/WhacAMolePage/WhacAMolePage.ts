@@ -13,7 +13,7 @@ export const WhacAMolePage = (): Page => {
   main.className = "whac-a-mole-page";
 
   main.innerHTML = `
-    <section class="game">
+    <section class="game" aria-label="Whac-A-Mole game">
         <div class="game__explication">
             <h1 class="game__explication-title">Welcome to Whac-a-mole GAME!</h1>
             <p class="game__description">
@@ -22,21 +22,21 @@ export const WhacAMolePage = (): Page => {
             </p>
         </div>
 
-        <div class="game__stats">
+        <div class="game__stats" aria-label="Game statistics">
             <p class="game__score">
-                Score: <span id="score" class="game__score-number">-</span>
+                Score: <span id="score" class="game__score-number" aria-live="polite">-</span>
             </p>
             <p class="game__time">
-                Time: <span id="time" class="game__time-number">-</span>
+                Time: <span id="time" class="game__time-number" aria-live="polite">-</span>
             </p>
         </div>
 
-        <div class="game__grid"></div>
+        <div class="game__grid" aria-label="Game board"></div>
 
         <div class="game__actions">
             <button
                 id="playAgain"
-                aria-label="play again"
+                aria-label="Play again"
                 class="game__btn-play-again"
             >
                 PLAY AGAIN

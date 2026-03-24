@@ -8,7 +8,7 @@ export const Mole = (): MoleComponent => {
   const mole = document.createElement("img");
 
   mole.src = assets.images.RatPng;
-  mole.alt = "mole";
+  mole.alt = "Rat - click to whack";
   mole.className = "mole";
 
   return mole;
