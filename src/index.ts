@@ -1,5 +1,5 @@
 import "@/index.css";
-import { WhacAMolePage } from "@/pages/WhacAMolePage/WhacAMolePage";
+import WhacAMolePage from "@/pages/WhacAMolePage/WhacAMolePage";
 
 const onInit = (): void => {
   const app = document.querySelector<HTMLDivElement>("#app");

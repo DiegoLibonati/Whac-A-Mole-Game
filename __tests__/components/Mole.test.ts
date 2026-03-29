@@ -1,6 +1,6 @@
 import type { MoleComponent } from "@/types/components";
 
-import { Mole } from "@/components/Mole/Mole";
+import Mole from "@/components/Mole/Mole";
 
 const renderComponent = (): MoleComponent => {
   const container = Mole();

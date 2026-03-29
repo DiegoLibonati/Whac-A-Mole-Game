@@ -1,7 +1,7 @@
 import type { GridItemProps } from "@/types/props";
 import type { GridItemComponent } from "@/types/components";
 
-import { GridItem } from "@/components/GridItem/GridItem";
+import GridItem from "@/components/GridItem/GridItem";
 
 const renderComponent = (props: GridItemProps): GridItemComponent => {
   const container = GridItem(props);

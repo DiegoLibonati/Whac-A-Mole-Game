@@ -1,6 +1,6 @@
 import type { Page } from "@/types/pages";
 
-import { Mole } from "@/components/Mole/Mole";
+import Mole from "@/components/Mole/Mole";
 
 import { fillGrid } from "@/helpers/fillGrid";
 
@@ -8,7 +8,7 @@ import { whacAMoleStore } from "@/stores/whacAMoleStore";
 
 import "@/pages/WhacAMolePage/WhacAMolePage.css";
 
-export const WhacAMolePage = (): Page => {
+const WhacAMolePage = (): Page => {
   const main = document.createElement("main") as Page;
   main.className = "whac-a-mole-page";
 
@@ -179,3 +179,5 @@ export const WhacAMolePage = (): Page => {
 
   return main;
 };
+
+export default WhacAMolePage;

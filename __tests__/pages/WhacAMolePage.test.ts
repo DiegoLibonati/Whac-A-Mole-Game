@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 
 import type { Page } from "@/types/pages";
 
-import { WhacAMolePage } from "@/pages/WhacAMolePage/WhacAMolePage";
+import WhacAMolePage from "@/pages/WhacAMolePage/WhacAMolePage";
 
 import { whacAMoleStore } from "@/stores/whacAMoleStore";
 

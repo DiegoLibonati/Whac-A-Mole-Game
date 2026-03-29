@@ -4,7 +4,7 @@ import assets from "@/assets/export";
 
 import "@/components/Mole/Mole.css";
 
-export const Mole = (): MoleComponent => {
+const Mole = (): MoleComponent => {
   const mole = document.createElement("img");
 
   mole.src = assets.images.RatPng;
@@ -13,3 +13,5 @@ export const Mole = (): MoleComponent => {
 
   return mole;
 };
+
+export default Mole;
