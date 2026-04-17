@@ -1,4 +1,4 @@
-# Whac A Mole Game
+# MoleRush
 
 ## Educational Purpose
 
@@ -17,7 +17,13 @@ The application will open automatically at `http://localhost:3000`
 
 ## Description
 
-I made a web page that allows you to play hit the `mole` but in this case it is a `rat`. Basically the user will have 60 seconds to hit the mouse as many times as possible, the mouse will be generated in a random space in the grid. If it is hit by left clicking with the mouse, you will score points.
+**MoleRush** is a browser-based arcade game built on the classic Whac-A-Mole concept, reimagined with a rat as the target. The player is presented with a 5×5 grid of cells and has exactly 60 seconds to score as many points as possible by clicking on rats as they randomly pop up across the board.
+
+Every 3 seconds a rat spawns in a random grid cell. The rat stays visible for 2 seconds before disappearing on its own — if the player clicks it before it vanishes, they earn one point and the rat is immediately removed. If they miss it, no point is awarded and the rat simply retreats. A live score counter and a countdown timer are always visible so the player knows exactly where they stand at any moment.
+
+When the timer hits zero the game ends automatically: the grid disappears, the final score is displayed alongside a congratulatory message, and a **Play Again** button appears. Clicking it fully resets the board — score back to zero, timer back to 60 seconds, fresh grid — and a new round begins instantly without requiring a page reload.
+
+Under the hood the game is written in pure vanilla TypeScript with zero runtime dependencies. State is managed through a custom generic pub/sub store (`Store<T>`) that notifies subscribers only when a value actually changes, keeping the UI in sync without any framework overhead. The DOM is built programmatically through thin factory functions (`GridItem`, `Mole`) and a helper (`fillGrid`) that populates the grid. The entire application lifecycle — spawning, timing, cleanup — is handled through native `setInterval` and `setTimeout` calls stored in the store so they can be reliably cleared on reset or game end.
 
 ## Technologies used
 
@@ -59,15 +65,7 @@ No production dependencies - Pure Vanilla TypeScript
 
 ## Portfolio Link
 
-[`https://www.diegolibonati.com.ar/#/project/Whac-A-Mole-Game`](https://www.diegolibonati.com.ar/#/project/Whac-A-Mole-Game)
-
-## Video
-
-https://user-images.githubusercontent.com/99032604/199616929-5f4a5738-43aa-4872-88f7-e336625e8b36.mp4
-
-## Video
-
-https://github.com/DiegoLibonati/Countdown-Page/assets/99032604/7510a3f4-0721-406e-b0a7-cff22bf9d0d5
+[`https://www.diegolibonati.com.ar/#/project/mole-rush`](https://www.diegolibonati.com.ar/#/project/mole-rush)
 
 ## Testing
 

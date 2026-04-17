@@ -1,9 +1,9 @@
-import type { WhacAMoleState } from "@/types/states";
+import type { MoleRushState } from "@/types/states";
 
 import { Store } from "@/core/store";
 
-export class WhacAMoleStore extends Store<WhacAMoleState> {
-  // constructor(initialState: WhacAMoleState) {
+export class MoleRushStore extends Store<MoleRushState> {
+  // constructor(initialState: MoleRushState) {
   //   super(initialState);
   // }
 
@@ -79,7 +79,7 @@ export class WhacAMoleStore extends Store<WhacAMoleState> {
   }
 }
 
-export const whacAMoleStore = new WhacAMoleStore({
+export const moleRushStore = new MoleRushStore({
   counter: 0,
   runTime: 60,
   timeoutSpawn: null,

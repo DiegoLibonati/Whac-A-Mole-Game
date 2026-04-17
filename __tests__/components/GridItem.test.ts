@@ -3,31 +3,48 @@ import type { GridItemComponent } from "@/types/components";
 
 import GridItem from "@/components/GridItem/GridItem";
 
-const renderComponent = (props: GridItemProps): GridItemComponent => {
-  const container = GridItem(props);
-  document.body.appendChild(container);
-  return container;
+const defaultProps: GridItemProps = {
+  id: "gi-0",
 };
 
-describe("GridItem Component", () => {
+const renderComponent = (
+  props: Partial<GridItemProps> = {}
+): GridItemComponent => {
+  const element = GridItem({ ...defaultProps, ...props });
+  document.body.appendChild(element);
+  return element;
+};
+
+describe("GridItem", () => {
   afterEach(() => {
     document.body.innerHTML = "";
   });
 
-  it("should render grid item with correct attributes", () => {
-    renderComponent({ id: "gi-0" });
+  describe("rendering", () => {
+    it("should render a div element with the given id", () => {
+      renderComponent();
+      expect(document.getElementById("gi-0")).toBeInTheDocument();
+    });
 
-    const gridItem = document.querySelector<HTMLDivElement>("#gi-0");
-    expect(gridItem).toBeInTheDocument();
-    expect(gridItem?.tagName).toBe("DIV");
-    expect(gridItem).toHaveClass("grid-item");
-  });
+    it("should have class grid-item", () => {
+      renderComponent();
+      expect(document.getElementById("gi-0")).toHaveClass("grid-item");
+    });
 
-  it("should render with different id", () => {
-    renderComponent({ id: "gi-5" });
+    it("should set the id from props", () => {
+      renderComponent({ id: "gi-5" });
+      expect(document.getElementById("gi-5")).toBeInTheDocument();
+    });
 
-    const gridItem = document.querySelector<HTMLDivElement>("#gi-5");
-    expect(gridItem).toBeInTheDocument();
-    expect(gridItem).toHaveAttribute("id", "gi-5");
+    it("should not render an element with a different id than provided", () => {
+      renderComponent({ id: "gi-3" });
+      expect(document.getElementById("gi-0")).not.toBeInTheDocument();
+      expect(document.getElementById("gi-3")).toBeInTheDocument();
+    });
+
+    it("should return the rendered div element", () => {
+      const element = renderComponent({ id: "gi-10" });
+      expect(element).toBe(document.getElementById("gi-10"));
+    });
   });
 });

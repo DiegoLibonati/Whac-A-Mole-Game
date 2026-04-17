@@ -1,7 +1,7 @@
 {
-  "name": "Whac-A-Mole Game",
-  "short_name": "Whac-A-Mole",
-  "description": "I made a web page that allows you to play hit the `mole` but in this case it is a `rat`. Basically the user will have 60 seconds to hit the mouse as many times as possible, the mouse will be generated in a random space in the grid. If it is hit by left clicking with the mouse, you will score points.",
+  "name": "MoleRush",
+  "short_name": "MoleRush",
+  "description": "MoleRush is a browser-based arcade game built on the classic Whac-A-Mole concept, reimagined with a rat as the target. The player is presented with a 5×5 grid of cells and has exactly 60 seconds to score as many points as possible by clicking on rats as they randomly pop up across the board.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

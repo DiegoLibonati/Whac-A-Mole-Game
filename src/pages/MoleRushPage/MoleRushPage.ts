@@ -4,18 +4,18 @@ import Mole from "@/components/Mole/Mole";
 
 import { fillGrid } from "@/helpers/fillGrid";
 
-import { whacAMoleStore } from "@/stores/whacAMoleStore";
+import { moleRushStore } from "@/stores/moleRushStore";
 
-import "@/pages/WhacAMolePage/WhacAMolePage.css";
+import "@/pages/MoleRushPage/MoleRushPage.css";
 
-const WhacAMolePage = (): Page => {
+const MoleRushPage = (): Page => {
   const main = document.createElement("main") as Page;
-  main.className = "whac-a-mole-page";
+  main.className = "mole-rush-page";
 
   main.innerHTML = `
-    <section class="game" aria-label="Whac-A-Mole game">
+    <section class="game" aria-label="MoleRush game">
         <div class="game__explication">
-            <h1 class="game__explication-title">Welcome to Whac-a-mole GAME!</h1>
+            <h1 class="game__explication-title">Welcome to MoleRush GAME!</h1>
             <p class="game__description">
                 You need to hit the RAT when he display in your window. If you hit,
                 you will earn points.
@@ -50,7 +50,7 @@ const WhacAMolePage = (): Page => {
   const handlePlayAgain = (e: MouseEvent): void => {
     e.preventDefault();
 
-    whacAMoleStore.cleanup();
+    moleRushStore.cleanup();
 
     const gameScore = main.querySelector<HTMLParagraphElement>(".game__score")!;
     const time = main.querySelector<HTMLSpanElement>(".game__time-number")!;
@@ -71,14 +71,14 @@ const WhacAMolePage = (): Page => {
 
     fillGrid(gameGrid, 25);
 
-    whacAMoleStore.setIntervalGame(setInterval(handleSpawnEnemy, 3000));
-    whacAMoleStore.setIntervalTime(setInterval(handleTimer, 1000));
+    moleRushStore.setIntervalGame(setInterval(handleSpawnEnemy, 3000));
+    moleRushStore.setIntervalTime(setInterval(handleTimer, 1000));
   };
 
   const handleEndGame = (): void => {
-    const { counter } = whacAMoleStore.getState();
+    const { counter } = moleRushStore.getState();
 
-    whacAMoleStore.cleanup();
+    moleRushStore.cleanup();
 
     const gameGrid = main.querySelector<HTMLDivElement>(".game__grid")!;
     const btnPlayAgain = main.querySelector<HTMLButtonElement>(
@@ -109,16 +109,16 @@ const WhacAMolePage = (): Page => {
     activeMoles.delete(mole);
 
     mole.remove();
-    whacAMoleStore.setCounterPlus();
-    gameScoreNumber.textContent = String(whacAMoleStore.get("counter"));
+    moleRushStore.setCounterPlus();
+    gameScoreNumber.textContent = String(moleRushStore.get("counter"));
   };
 
   const handleSpawnEnemy = (): void => {
-    const { timeoutSpawn } = whacAMoleStore.getState();
+    const { timeoutSpawn } = moleRushStore.getState();
 
     const gameGrid = main.querySelector<HTMLDivElement>(".game__grid")!;
 
-    if (timeoutSpawn) whacAMoleStore.clearTimeoutSpawn();
+    if (timeoutSpawn) moleRushStore.clearTimeoutSpawn();
 
     const spawn = Math.floor(Math.random() * gameGrid.children.length);
 
@@ -131,7 +131,7 @@ const WhacAMolePage = (): Page => {
     activeMoles.add(mole);
     mole.addEventListener("click", handleClickMole);
 
-    whacAMoleStore.setTimeoutSpawn(
+    moleRushStore.setTimeoutSpawn(
       setTimeout(() => {
         mole.removeEventListener("click", handleClickMole);
         activeMoles.delete(mole);
@@ -141,7 +141,7 @@ const WhacAMolePage = (): Page => {
   };
 
   const handleTimer = (): void => {
-    const { runTime } = whacAMoleStore.getState();
+    const { runTime } = moleRushStore.getState();
 
     const time = main.querySelector<HTMLSpanElement>(".game__time-number")!;
 
@@ -150,7 +150,7 @@ const WhacAMolePage = (): Page => {
       return;
     }
 
-    whacAMoleStore.setRunTimeMinus();
+    moleRushStore.setRunTimeMinus();
     time.textContent = String(runTime);
   };
 
@@ -161,13 +161,13 @@ const WhacAMolePage = (): Page => {
 
   fillGrid(gameGrid, 25);
 
-  whacAMoleStore.setIntervalGame(setInterval(handleSpawnEnemy, 3000));
-  whacAMoleStore.setIntervalTime(setInterval(handleTimer, 1000));
+  moleRushStore.setIntervalGame(setInterval(handleSpawnEnemy, 3000));
+  moleRushStore.setIntervalTime(setInterval(handleTimer, 1000));
 
   btnPlayAgain?.addEventListener("click", handlePlayAgain);
 
   main.cleanup = (): void => {
-    whacAMoleStore.cleanup();
+    moleRushStore.cleanup();
 
     btnPlayAgain?.removeEventListener("click", handlePlayAgain);
 
@@ -180,4 +180,4 @@ const WhacAMolePage = (): Page => {
   return main;
 };
 
-export default WhacAMolePage;
+export default MoleRushPage;

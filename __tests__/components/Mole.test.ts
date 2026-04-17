@@ -1,25 +1,49 @@
+import { screen } from "@testing-library/dom";
+
 import type { MoleComponent } from "@/types/components";
 
 import Mole from "@/components/Mole/Mole";
 
+import { mockAssets } from "@tests/__mocks__/assets.mock";
+
 const renderComponent = (): MoleComponent => {
-  const container = Mole();
-  document.body.appendChild(container);
-  return container;
+  const element = Mole();
+  document.body.appendChild(element);
+  return element;
 };
 
-describe("Mole Component", () => {
+describe("Mole", () => {
   afterEach(() => {
     document.body.innerHTML = "";
   });
 
-  it("should render mole image with correct attributes", () => {
-    renderComponent();
+  describe("rendering", () => {
+    it("should render an img element", () => {
+      renderComponent();
+      expect(screen.getByRole("img")).toBeInTheDocument();
+    });
 
-    const mole = document.querySelector<HTMLImageElement>(".mole");
-    expect(mole).toBeInTheDocument();
-    expect(mole?.tagName).toBe("IMG");
-    expect(mole).toHaveAttribute("src", "/images/rat.png");
-    expect(mole).toHaveAttribute("alt", "Rat - click to whack");
+    it("should have class mole", () => {
+      renderComponent();
+      expect(screen.getByRole("img")).toHaveClass("mole");
+    });
+
+    it("should have alt text Rat - click to whack", () => {
+      renderComponent();
+      expect(screen.getByAltText("Rat - click to whack")).toBeInTheDocument();
+    });
+
+    it("should have the correct src from assets", () => {
+      renderComponent();
+      expect(screen.getByRole("img")).toHaveAttribute(
+        "src",
+        mockAssets.images.RatPng
+      );
+    });
+
+    it("should return the rendered img element", () => {
+      const element = renderComponent();
+      expect(element).toBe(screen.getByRole("img"));
+    });
   });
 });
