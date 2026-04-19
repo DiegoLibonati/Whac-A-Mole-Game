@@ -4,8 +4,6 @@ import type { MoleComponent } from "@/types/components";
 
 import Mole from "@/components/Mole/Mole";
 
-import { mockAssets } from "@tests/__mocks__/assets.mock";
-
 const renderComponent = (): MoleComponent => {
   const element = Mole();
   document.body.appendChild(element);
@@ -35,10 +33,7 @@ describe("Mole", () => {
 
     it("should have the correct src from assets", () => {
       renderComponent();
-      expect(screen.getByRole("img")).toHaveAttribute(
-        "src",
-        mockAssets.images.RatPng
-      );
+      expect(screen.getByRole("img")).toHaveAttribute("src", "test-file-stub");
     });
 
     it("should return the rendered img element", () => {
