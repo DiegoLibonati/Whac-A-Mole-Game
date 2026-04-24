@@ -50,12 +50,16 @@ describe("MoleRushPage", () => {
 
     it("should render score with initial value -", () => {
       renderPage();
-      expect(document.getElementById("score")).toHaveTextContent("-");
+      expect(
+        document.querySelector<HTMLSpanElement>("#score")
+      ).toHaveTextContent("-");
     });
 
     it("should render time with initial value -", () => {
       renderPage();
-      expect(document.getElementById("time")).toHaveTextContent("-");
+      expect(
+        document.querySelector<HTMLSpanElement>("#time")
+      ).toHaveTextContent("-");
     });
 
     it("should render the game grid with 25 items", () => {
@@ -76,7 +80,9 @@ describe("MoleRushPage", () => {
     it("should update the time display after 1 second", () => {
       renderPage();
       jest.advanceTimersByTime(1000);
-      expect(document.getElementById("time")).toHaveTextContent("60");
+      expect(
+        document.querySelector<HTMLSpanElement>("#time")
+      ).toHaveTextContent("60");
     });
 
     it("should decrement runTime in the store after each tick", () => {
@@ -136,8 +142,10 @@ describe("MoleRushPage", () => {
       jest.spyOn(Math, "random").mockReturnValue(0);
       renderPage();
       jest.advanceTimersByTime(3000);
-      const gridItem = document.getElementById("gi-0")!;
-      expect(gridItem.querySelector(".mole")).toBeInTheDocument();
+      const gridItem = document.querySelector<HTMLDivElement>("#gi-0")!;
+      expect(
+        gridItem.querySelector<HTMLImageElement>(".mole")
+      ).toBeInTheDocument();
     });
 
     it("should remove the mole automatically after 2 more seconds", () => {
@@ -145,8 +153,8 @@ describe("MoleRushPage", () => {
       renderPage();
       jest.advanceTimersByTime(3000);
       jest.advanceTimersByTime(2000);
-      const gridItem = document.getElementById("gi-0")!;
-      expect(gridItem.querySelector(".mole")).toBeNull();
+      const gridItem = document.querySelector<HTMLDivElement>("#gi-0")!;
+      expect(gridItem.querySelector<HTMLImageElement>(".mole")).toBeNull();
     });
   });
 
@@ -158,7 +166,9 @@ describe("MoleRushPage", () => {
       jest.advanceTimersByTime(3000);
       const mole = document.querySelector<HTMLImageElement>(".mole")!;
       await user.click(mole);
-      expect(document.getElementById("score")).toHaveTextContent("1");
+      expect(
+        document.querySelector<HTMLSpanElement>("#score")
+      ).toHaveTextContent("1");
     });
 
     it("should remove the mole from the DOM when clicked", async () => {
@@ -168,7 +178,7 @@ describe("MoleRushPage", () => {
       jest.advanceTimersByTime(3000);
       const mole = document.querySelector<HTMLImageElement>(".mole")!;
       await user.click(mole);
-      expect(document.querySelector(".mole")).toBeNull();
+      expect(document.querySelector<HTMLImageElement>(".mole")).toBeNull();
     });
 
     it("should increment the store counter when a mole is clicked", async () => {
@@ -192,7 +202,9 @@ describe("MoleRushPage", () => {
       renderPage();
       jest.advanceTimersByTime(2000);
       await user.click(screen.getByRole("button", { name: "Play again" }));
-      expect(document.getElementById("score")).toHaveTextContent("-");
+      expect(
+        document.querySelector<HTMLSpanElement>("#score")
+      ).toHaveTextContent("-");
     });
 
     it("should reset time to - when play again is clicked", async () => {
