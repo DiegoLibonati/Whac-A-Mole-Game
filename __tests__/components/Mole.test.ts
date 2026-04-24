@@ -13,6 +13,7 @@ const renderComponent = (): MoleComponent => {
 describe("Mole", () => {
   afterEach(() => {
     document.body.innerHTML = "";
+    jest.clearAllMocks();
   });
 
   describe("rendering", () => {

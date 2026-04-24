@@ -16,6 +16,7 @@ describe("moleRushStore", () => {
 
   afterEach(() => {
     jest.useRealTimers();
+    jest.restoreAllMocks();
   });
 
   describe("initial state", () => {
@@ -84,7 +85,7 @@ describe("moleRushStore", () => {
   describe("setTimeoutSpawn", () => {
     it("should store the timeout ID", () => {
       const timeout = setTimeout(() => {
-        // empty-fn
+        // empty fn
       }, 1000) as unknown as number;
       store.setTimeoutSpawn(timeout);
       expect(store.get("timeoutSpawn")).toBe(timeout);
@@ -94,7 +95,7 @@ describe("moleRushStore", () => {
   describe("setIntervalGame", () => {
     it("should store the interval ID", () => {
       const interval = setInterval(() => {
-        // empty-fn
+        // empty fn
       }, 3000) as unknown as number;
       store.setIntervalGame(interval);
       expect(store.get("intervalGame")).toBe(interval);
@@ -104,7 +105,7 @@ describe("moleRushStore", () => {
   describe("setIntervalTime", () => {
     it("should store the interval ID", () => {
       const interval = setInterval(() => {
-        // empty-fn
+        // empty fn
       }, 1000) as unknown as number;
       store.setIntervalTime(interval);
       expect(store.get("intervalTime")).toBe(interval);
@@ -115,7 +116,7 @@ describe("moleRushStore", () => {
     it("should clear the timeout and set timeoutSpawn to null", () => {
       const mockClearTimeout = jest.spyOn(global, "clearTimeout");
       const timeout = setTimeout(() => {
-        // empty-fn
+        // empty fn
       }, 1000) as unknown as number;
       store.setTimeoutSpawn(timeout);
       store.clearTimeoutSpawn();
@@ -147,17 +148,17 @@ describe("moleRushStore", () => {
     it("should set all timer IDs to null", () => {
       store.setTimeoutSpawn(
         setTimeout(() => {
-          // empty-fn
+          // empty fn
         }, 1000) as unknown as number
       );
       store.setIntervalGame(
         setInterval(() => {
-          // empty-fn
+          // empty fn
         }, 3000) as unknown as number
       );
       store.setIntervalTime(
         setInterval(() => {
-          // empty-fn
+          // empty fn
         }, 1000) as unknown as number
       );
       store.setResetGame();
@@ -170,13 +171,13 @@ describe("moleRushStore", () => {
       const mockClearTimeout = jest.spyOn(global, "clearTimeout");
       const mockClearInterval = jest.spyOn(global, "clearInterval");
       const timeout = setTimeout(() => {
-        // empty-fn
+        // empty fn
       }, 1000) as unknown as number;
       const intervalGame = setInterval(() => {
-        // empty-fn
+        // empty fn
       }, 3000) as unknown as number;
       const intervalTime = setInterval(() => {
-        // empty-fn
+        // empty fn
       }, 1000) as unknown as number;
       store.setTimeoutSpawn(timeout);
       store.setIntervalGame(intervalGame);
@@ -206,13 +207,13 @@ describe("moleRushStore", () => {
       const mockClearTimeout = jest.spyOn(global, "clearTimeout");
       const mockClearInterval = jest.spyOn(global, "clearInterval");
       const timeout = setTimeout(() => {
-        // empty-fn
+        // empty fn
       }, 1000) as unknown as number;
       const intervalGame = setInterval(() => {
-        // empty-fn
+        // empty fn
       }, 3000) as unknown as number;
       const intervalTime = setInterval(() => {
-        // empty-fn
+        // empty fn
       }, 1000) as unknown as number;
       store.setTimeoutSpawn(timeout);
       store.setIntervalGame(intervalGame);

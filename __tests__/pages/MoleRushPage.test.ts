@@ -25,6 +25,7 @@ describe("MoleRushPage", () => {
     if (page.cleanup) page.cleanup();
     document.body.innerHTML = "";
     jest.useRealTimers();
+    jest.restoreAllMocks();
   });
 
   describe("rendering", () => {

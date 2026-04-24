@@ -13,7 +13,7 @@ class TestStore extends Store<TestState> {
   }
 }
 
-describe("Store", () => {
+describe("store", () => {
   let store: TestStore;
 
   beforeEach(() => {

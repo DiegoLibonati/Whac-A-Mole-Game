@@ -18,6 +18,7 @@ const renderComponent = (
 describe("GridItem", () => {
   afterEach(() => {
     document.body.innerHTML = "";
+    jest.clearAllMocks();
   });
 
   describe("rendering", () => {
