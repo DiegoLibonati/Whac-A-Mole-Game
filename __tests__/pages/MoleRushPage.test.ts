@@ -33,10 +33,10 @@ describe("MoleRushPage", () => {
       expect(screen.getByRole("main")).toBeInTheDocument();
     });
 
-    it("should render a section with aria-label MoleRush game", () => {
+    it("should render a section with aria-label Mole Rush game", () => {
       renderPage();
       expect(
-        screen.getByRole("region", { name: "MoleRush game" })
+        screen.getByRole("region", { name: "Mole Rush game" })
       ).toBeInTheDocument();
     });
 

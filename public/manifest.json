@@ -1,7 +1,7 @@
 {
-  "name": "MoleRush",
-  "short_name": "MoleRush",
-  "description": "MoleRush is a browser-based arcade game built on the classic Whac-A-Mole concept, reimagined with a rat as the target. The player is presented with a 5×5 grid of cells and has exactly 60 seconds to score as many points as possible by clicking on rats as they randomly pop up across the board.",
+  "name": "Mole Rush",
+  "short_name": "Mole Rush",
+  "description": "Mole Rush is a browser-based arcade game built on the classic Whac-A-Mole concept, reimagined with a rat as the target.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

@@ -1,4 +1,4 @@
-# MoleRush
+# Mole Rush
 
 ## Educational Purpose
 
@@ -17,7 +17,7 @@ The application will open automatically at `http://localhost:3000`
 
 ## Description
 
-**MoleRush** is a browser-based arcade game built on the classic Whac-A-Mole concept, reimagined with a rat as the target. The player is presented with a 5×5 grid of cells and has exactly 60 seconds to score as many points as possible by clicking on rats as they randomly pop up across the board.
+**Mole Rush** is a browser-based arcade game built on the classic Whac-A-Mole concept, reimagined with a rat as the target. The player is presented with a 5×5 grid of cells and has exactly 60 seconds to score as many points as possible by clicking on rats as they randomly pop up across the board.
 
 Every 3 seconds a rat spawns in a random grid cell. The rat stays visible for 2 seconds before disappearing on its own — if the player clicks it before it vanishes, they earn one point and the rat is immediately removed. If they miss it, no point is awarded and the rat simply retreats. A live score counter and a countdown timer are always visible so the player knows exactly where they stand at any moment.
 

@@ -13,9 +13,9 @@ const MoleRushPage = (): Page => {
   main.className = "mole-rush-page";
 
   main.innerHTML = `
-    <section class="game" aria-label="MoleRush game">
+    <section class="game" aria-label="Mole Rush game">
         <div class="game__explication">
-            <h1 class="game__explication-title">Welcome to MoleRush GAME!</h1>
+            <h1 class="game__explication-title">Welcome to Mole Rush GAME!</h1>
             <p class="game__description">
                 You need to hit the RAT when he display in your window. If you hit,
                 you will earn points.
