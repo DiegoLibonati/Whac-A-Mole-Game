@@ -6,15 +6,6 @@ This project was created primarily for **educational and learning purposes**.
 While it is well-structured and could technically be used in production, it is **not intended for commercialization**.  
 The main goal is to explore and demonstrate best practices, patterns, and technologies in software development.
 
-## Getting Started
-
-1. Clone the repository
-2. Navigate to the project folder
-3. Execute: `npm install`
-4. Execute: `npm run dev`
-
-The application will open automatically at `http://localhost:3000`
-
 ## Description
 
 **Mole Rush** is a browser-based arcade game built on the classic Whac-A-Mole concept, reimagined with a rat as the target. The player is presented with a 5×5 grid of cells and has exactly 60 seconds to score as many points as possible by clicking on rats as they randomly pop up across the board.
@@ -33,6 +24,8 @@ Under the hood the game is written in pure vanilla TypeScript with zero runtime 
 4. Vite
 
 ## Libraries used
+
+The project ships with **zero runtime dependencies** — everything below is tooling used only during development.
 
 #### Dependencies
 
@@ -64,11 +57,20 @@ No production dependencies - Pure Vanilla TypeScript
 "vite": "^7.1.6"
 ```
 
-## Portfolio Link
+## Getting Started
 
-[`https://www.diegolibonati.com.ar/#/project/mole-rush`](https://www.diegolibonati.com.ar/#/project/mole-rush)
+With the toolchain above installed, follow these steps to run the game locally:
+
+1. Clone the repository
+2. Navigate to the project folder
+3. Execute: `npm install`
+4. Execute: `npm run dev`
+
+The application will open automatically at `http://localhost:3000`.
 
 ## Testing
+
+Once the app is running locally, you can verify the game logic with the test suite:
 
 1. Navigate to the project folder
 2. Execute: `npm test`
@@ -79,11 +81,11 @@ For coverage report:
 npm run test:coverage
 ```
 
-## Security
+## Security Audit
+
+In addition to the test suite, check the dependency tree for known vulnerabilities:
 
 ### npm audit
-
-Check for vulnerabilities in dependencies:
 
 ```bash
 npm audit
@@ -92,3 +94,7 @@ npm audit
 ## Known Issues
 
 None at the moment.
+
+## Portfolio Link
+
+[`https://www.diegolibonati.com.ar/#/project/mole-rush`](https://www.diegolibonati.com.ar/#/project/mole-rush)
