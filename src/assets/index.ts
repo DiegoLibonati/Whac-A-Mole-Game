@@ -1,11 +1,9 @@
 import RatPng from "@/assets/images/rata.png";
 import DLPng from "@/assets/images/DL.png";
 
-const assets = {
+export default {
   images: {
     RatPng: RatPng,
     DLPng: DLPng,
   },
 };
-
-export default assets;

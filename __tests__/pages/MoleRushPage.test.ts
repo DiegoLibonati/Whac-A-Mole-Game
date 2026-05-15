@@ -157,6 +157,14 @@ describe("MoleRushPage", () => {
       const gridItem = document.querySelector<HTMLDivElement>("#gi-0")!;
       expect(gridItem.querySelector<HTMLImageElement>(".mole")).toBeNull();
     });
+
+    it("should clear the previous spawn timeout before spawning a new mole", () => {
+      jest.spyOn(Math, "random").mockReturnValue(0);
+      const mockClearTimeout = jest.spyOn(global, "clearTimeout");
+      renderPage();
+      jest.advanceTimersByTime(6000);
+      expect(mockClearTimeout).toHaveBeenCalled();
+    });
   });
 
   describe("click mole", () => {
@@ -250,6 +258,38 @@ describe("MoleRushPage", () => {
       page.cleanup!();
       expect(moleRushStore.get("intervalGame")).toBeNull();
       expect(moleRushStore.get("intervalTime")).toBeNull();
+    });
+  });
+
+  describe("play again with active moles", () => {
+    it("should remove event listeners from active moles when play again is clicked", async () => {
+      const user = userEvent.setup({ delay: null });
+      jest.spyOn(Math, "random").mockReturnValue(0);
+      renderPage();
+      jest.advanceTimersByTime(3000);
+      const mole = document.querySelector<HTMLImageElement>(".mole")!;
+      const mockRemoveEventListener = jest.spyOn(mole, "removeEventListener");
+      await user.click(screen.getByRole("button", { name: "Play again" }));
+      expect(mockRemoveEventListener).toHaveBeenCalledWith(
+        "click",
+        expect.any(Function)
+      );
+    });
+  });
+
+  describe("end game with active moles", () => {
+    it("should remove event listeners from active moles when the game ends", () => {
+      jest.spyOn(Math, "random").mockReturnValue(0);
+      moleRushStore.setState({ runTime: 3 });
+      renderPage();
+      jest.advanceTimersByTime(3000);
+      const mole = document.querySelector<HTMLImageElement>(".mole")!;
+      const mockRemoveEventListener = jest.spyOn(mole, "removeEventListener");
+      jest.advanceTimersByTime(1000);
+      expect(mockRemoveEventListener).toHaveBeenCalledWith(
+        "click",
+        expect.any(Function)
+      );
     });
   });
 });

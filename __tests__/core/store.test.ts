@@ -130,5 +130,14 @@ describe("store", () => {
       store.setState({ count: 2 });
       expect(mockListener).toHaveBeenCalledTimes(1);
     });
+
+    it("should be safe to call unsubscribe more than once", () => {
+      const mockListener: Listener<number> = jest.fn();
+      const unsubscribe = store.subscribe("count", mockListener);
+      unsubscribe();
+      unsubscribe();
+      store.setState({ count: 1 });
+      expect(mockListener).not.toHaveBeenCalled();
+    });
   });
 });

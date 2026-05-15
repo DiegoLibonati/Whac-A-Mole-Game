@@ -1,6 +1,6 @@
 import type { MoleComponent } from "@/types/components";
 
-import assets from "@/assets/export";
+import assets from "@/assets/index";
 
 import "@/components/Mole/Mole.css";
 

@@ -59,7 +59,7 @@ No production dependencies - Pure Vanilla TypeScript
 
 ## Getting Started
 
-With the toolchain above installed, follow these steps to run the game locally:
+**Requires Node.js 22** (see `.nvmrc`). With the toolchain above installed, follow these steps to run the game locally:
 
 1. Clone the repository
 2. Navigate to the project folder
