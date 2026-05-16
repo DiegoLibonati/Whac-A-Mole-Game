@@ -81,6 +81,54 @@ For coverage report:
 npm run test:coverage
 ```
 
+## Continuous Integration
+
+The repository ships with a **GitHub Actions** pipeline defined in [`.github/workflows/ci.yml`](.github/workflows/ci.yml). It runs automatically on every `push` and `pull_request` targeting the `main` branch.
+
+### Pipeline overview
+
+```
+                      ┌─── PR or push to main ───┐
+                      ▼                          ▼
+┌──────────────────────┐  ┌──────────────────┐  ┌──────────────────┐
+│   lint-and-audit     │─▶│      testing     │─▶│      build       │
+│ eslint · tsc --noEmit│  │  jest (jsdom)    │  │  tsc + vite build│
+└──────────────────────┘  └──────────────────┘  └──────────────────┘
+```
+
+All three jobs run on `ubuntu-latest` and resolve the Node.js version from [`.nvmrc`](.nvmrc) (Node 22), with the npm cache enabled via `actions/setup-node`.
+
+### Validation jobs (run on every PR and push)
+
+1. **`lint-and-audit`** — installs dependencies with `npm ci`, then runs `npm run lint` (ESLint) and `npm run type-check` (`tsc --noEmit`). Fails the pipeline on any lint error or type error.
+2. **`testing`** — depends on `lint-and-audit`. Reinstalls dependencies and runs `npm run test`, which executes the full Jest suite under `jest-environment-jsdom`.
+3. **`build`** — depends on `testing`. Reinstalls dependencies and runs `npm run build`, which type-checks the project and produces the production Vite bundle. Acts as a smoke test that the app still bundles cleanly.
+
+Each job re-checks out the repo and reinstalls dependencies independently, so a failure in one stage cannot leak partial state into the next.
+
+### Where the build outputs live
+
+| Output                                    | Location                                                    |
+| ----------------------------------------- | ----------------------------------------------------------- |
+| Validation logs (lint, type-check, tests) | **Actions** tab on GitHub                                   |
+| Production bundle (`dist/`)               | Ephemeral, inside the runner — not published as an artifact |
+
+> **Note:** This pipeline does not produce GitHub Releases or upload distributable artifacts; it is a validation pipeline only. If you need to deploy, run `npm run build` locally and publish `dist/` to your host of choice.
+
+### Running the same checks locally
+
+```bash
+# lint-and-audit
+npm run lint
+npm run type-check
+
+# testing
+npm run test
+
+# build
+npm run build
+```
+
 ## Security Audit
 
 In addition to the test suite, check the dependency tree for known vulnerabilities:
